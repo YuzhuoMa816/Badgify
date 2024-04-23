@@ -1,9 +1,11 @@
 import 'package:badgify/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../modals/statement.dart';
 import '../utils/colors.dart';
 
 class SignIn extends StatefulWidget {
@@ -65,25 +67,14 @@ Widget buildButton(String buttonText) {
 
 class _SignInState extends State<SignIn> {
 
-
-  void _showAgreementDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: Text(language.agreementText),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(language.close),
-            ),
-          ],
-        );
-      },
-    );
+  Future<void> signInWithPhone(PhoneAuthCredential credential) async {
+    try {
+      await FirebaseAuth.instance.signInWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -219,7 +210,7 @@ class _SignInState extends State<SignIn> {
                     child: GestureDetector(
                       onTap: (){
                         setState(() {
-                          _showAgreementDialog(context);
+                          AgreementModal.showAgreementDialog(context);
                         });
                       },
                       child: Text(
