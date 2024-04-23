@@ -38,7 +38,11 @@ abstract class BaseLanguage {
 
   String get createAccount;
 
+  String get infoCollectionStatement;
 
+  String get close;
+
+  String get agreementText;
 
 
 

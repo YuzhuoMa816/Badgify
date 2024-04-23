@@ -1,6 +1,7 @@
 import 'package:badgify/main.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../utils/colors.dart';
@@ -23,7 +24,8 @@ Color getHighContrastColor() {
 Color highContrastColor = getHighContrastColor();
 
 Widget buildButton(String buttonText) {
-  return Container(
+  return
+    Container(
     decoration: BoxDecoration(
       border: Border.all(color: Colors.black),
       borderRadius: BorderRadius.circular(5),
@@ -62,13 +64,37 @@ Widget buildButton(String buttonText) {
 }
 
 class _SignInState extends State<SignIn> {
+
+
+  void _showAgreementDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text(language.agreementText),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(language.close),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        systemOverlayStyle: SystemUiOverlayStyle(statusBarIconBrightness: appStore.isDarkMode ? Brightness.light : Brightness.dark, statusBarColor: context.scaffoldBackgroundColor),
+
+      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(5.0),
           child: Center(
             child: SizedBox(
               width: context.width() * 0.9,
@@ -82,7 +108,7 @@ class _SignInState extends State<SignIn> {
                     height: 60,
                     width: 100,
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 30),
 
                   Text(
                     language.signIn,
@@ -179,6 +205,31 @@ class _SignInState extends State<SignIn> {
                   buildButton(language.continueWithFb),
                   const SizedBox(height: 6),
                   buildButton(language.continueWithApple),
+
+
+                  const Divider(
+                    color: Colors.grey,
+                    thickness: 1.0,
+                    height: 20.0,
+                    indent: 0.0,
+                    endIndent: 0.0,
+                  ),
+
+                  Center(
+                    child: GestureDetector(
+                      onTap: (){
+                        setState(() {
+                          _showAgreementDialog(context);
+                        });
+                      },
+                      child: Text(
+                        language.infoCollectionStatement,
+                        style: TextStyle(fontSize: 10.0, color: primaryColor),
+                      ),
+                    ),
+                  )
+
+
                 ],
               ),
             ),

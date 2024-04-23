@@ -32,27 +32,33 @@ class LanguageEn extends BaseLanguage {
   String get continueWord => 'Continue';
 
   @override
-  // TODO: implement continueWithApple
   String get continueWithApple => 'Continue with Apple';
 
   @override
-  // TODO: implement continueWithFb
   String get continueWithFb => 'Continue with Facebook';
 
   @override
-  // TODO: implement continueWithGoogle
   String get continueWithGoogle => 'Continue with Google';
 
   @override
-  // TODO: implement createAccound
   String get createAccount => 'Create account';
 
   @override
   String get dontHaveAccount => 'Don\'t have an account';
 
   @override
-  // TODO: implement or
   String get or => 'Or';
+
+  @override
+  String get infoCollectionStatement => 'Personal Information Collection Statement';
+
+  @override
+  // TODO: implement agreementText
+  String get agreementText => 'agreementText need to be finished';
+
+  @override
+  // TODO: implement close
+  String get close => 'Close';
 
 
 }

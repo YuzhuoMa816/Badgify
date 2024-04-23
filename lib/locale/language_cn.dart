@@ -44,9 +44,18 @@ class LanguageCn extends BaseLanguage {
   String get createAccount => '创建账号';
 
   @override
-  String get dontHaveAccount => '还没有账号？';
+  String get dontHaveAccount => '还没有账号';
 
   @override
   String get or => '或';
+
+  @override
+  String get infoCollectionStatement => '声明条款';
+
+  @override
+  String get agreementText => '声明条款内容——待补充';
+
+  @override
+  String get close => '关闭';
 
 }
