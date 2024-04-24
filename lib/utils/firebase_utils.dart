@@ -1,8 +1,6 @@
-import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -64,7 +62,7 @@ void showNotification(int id, String title, String message, RemoteMessage remote
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   //code for background notification channel
-  AndroidNotificationChannel channel = AndroidNotificationChannel(
+  AndroidNotificationChannel channel = const AndroidNotificationChannel(
     'notification',
     'Notification',
     importance: Importance.high,
@@ -89,7 +87,7 @@ void showNotification(int id, String title, String message, RemoteMessage remote
     },
   );
 
-  var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+  var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
     'notification',
     'Notification',
     importance: Importance.high,

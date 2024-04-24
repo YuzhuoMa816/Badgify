@@ -6,10 +6,10 @@ class PhoneNumberFormatter {
     phoneNumber = phoneNumber.replaceAll(' ', '');
 
     if (phoneNumber.startsWith('0')) {
-      phoneNumber = '+61' + phoneNumber.substring(1);
+      phoneNumber = '+61${phoneNumber.substring(1)}';
     }
     if (phoneNumber.startsWith('61')) {
-      phoneNumber = '+' + phoneNumber;
+      phoneNumber = '+$phoneNumber';
     }
 
     return phoneNumber;

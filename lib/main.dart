@@ -11,7 +11,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:badgify/utils/common.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 import 'app_theme.dart';

@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:the_apple_sign_in/the_apple_sign_in.dart';
 import '../main.dart';
-import '../utils/constant.dart';
 
 class ExternalAuth {
   Future<User> signInWithGoogle() async {
@@ -44,7 +42,7 @@ class ExternalAuth {
     print("in");
     if (await TheAppleSignIn.isAvailable()) {
       AuthorizationResult result = await TheAppleSignIn.performRequests([
-        AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
+        const AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
       ]);
 
       print(result.status);

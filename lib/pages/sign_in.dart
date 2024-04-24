@@ -1,17 +1,13 @@
 import 'package:badgify/main.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../api/external_platform_auth.dart';
-import '../api/firebase/phone_email_verify.dart';
 import '../modals/statement.dart';
 import '../utils/colors.dart';
 
-import 'package:http/http.dart' as http;
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 
 
@@ -54,8 +50,7 @@ class _SignInState extends State<SignIn> {
       print(googleUser.toString());
       if (googleUser.displayName
           .validate()
-          .split(' ')
-          .length >= 1) firstName = googleUser.displayName.splitBefore(' ');
+          .split(' ').isNotEmpty) firstName = googleUser.displayName.splitBefore(' ');
       if (googleUser.displayName
           .validate()
           .split(' ')
@@ -134,11 +129,11 @@ class _SignInState extends State<SignIn> {
                   // Add some space between icon and text
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 0),
+                      padding: const EdgeInsets.symmetric(vertical: 0),
                       // Adjust the vertical padding here
                       child: Text(
                         buttonText,
-                        style: TextStyle(fontSize: 14),
+                        style: const TextStyle(fontSize: 14),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -217,7 +212,7 @@ class _SignInState extends State<SignIn> {
                       children: [
                         TextSpan(
                           text: '${language.dontHaveAccount}?  ',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.black,
                           ),
                         ),
@@ -241,14 +236,14 @@ class _SignInState extends State<SignIn> {
                     children: [
                       Expanded(
                         child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 16),
+                          margin: const EdgeInsets.symmetric(horizontal: 16),
                           height: 1,
                           color: Colors.grey,
                         ),
                       ),
                       Text(
                         language.or,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                           fontSize: 18,
@@ -256,7 +251,7 @@ class _SignInState extends State<SignIn> {
                       ),
                       Expanded(
                         child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 16),
+                          margin: const EdgeInsets.symmetric(horizontal: 16),
                           height: 1,
                           color: Colors.grey,
                         ),
