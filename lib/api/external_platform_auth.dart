@@ -41,11 +41,13 @@ class ExternalAuth {
   }
 
   Future<User> appleSignIn() async {
+    print("in");
     if (await TheAppleSignIn.isAvailable()) {
       AuthorizationResult result = await TheAppleSignIn.performRequests([
         AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
       ]);
 
+      print(result.status);
       switch (result.status) {
         case AuthorizationStatus.authorized:
           final appleIdCredential = result.credential!;

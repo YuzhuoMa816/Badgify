@@ -76,6 +76,19 @@ class _SignInState extends State<SignIn> {
       appStore.setLoading(false);
       toast(e.toString());
     });
+    // await SignInWithApple.getAppleIDCredential(
+    //     scopes: [
+    //       AppleIDAuthorizationScopes.email,
+    //       AppleIDAuthorizationScopes.fullName,
+    //     ],
+    //     webAuthenticationOptions: WebAuthenticationOptions(clientId: ''
+    //
+    //     )
+    //
+    //
+    // )
+
+
 
   }
 
