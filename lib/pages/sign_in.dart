@@ -10,6 +10,11 @@ import '../api/firebase/phone_email_verify.dart';
 import '../modals/statement.dart';
 import '../utils/colors.dart';
 
+import 'package:http/http.dart' as http;
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+
+
+
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
 
@@ -67,7 +72,6 @@ class _SignInState extends State<SignIn> {
     await externalAuth.appleSignIn().then((appleUser) async {
       print("in apple");
       print(appleUser.toString());
-
     }).catchError((e) {
       appStore.setLoading(false);
       toast(e.toString());
