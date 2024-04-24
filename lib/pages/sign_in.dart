@@ -5,16 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../api/external_platform_auth.dart';
+import '../api/firebase/phone_email_verify.dart';
 import '../modals/statement.dart';
 import '../utils/colors.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
 
+
+
   @override
   State<SignIn> createState() => _SignInState();
 }
 
+// create getHighContrastColor for different theme(dark/light)
 Color getHighContrastColor() {
   return Color.alphaBlend(Colors.white.withOpacity(0.3), Colors.transparent)
               .computeLuminance() >
@@ -25,59 +30,109 @@ Color getHighContrastColor() {
 
 Color highContrastColor = getHighContrastColor();
 
-Widget buildButton(String buttonText) {
-  return
-    Container(
-    decoration: BoxDecoration(
-      border: Border.all(color: Colors.black),
-      borderRadius: BorderRadius.circular(5),
-    ),
-    child: AppButton(
-      onTap: () {},
-      color: Colors.white,
-      textColor: highContrastColor,
-      width: double.infinity,
-      // Fill the available width
-      child: Center(
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.arrow_forward, color: highContrastColor),
-            // Add some space between icon and text
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 0),
-                // Adjust the vertical padding here
-                child: Text(
-                  buttonText,
-                  style: TextStyle(fontSize: 14),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+// extract button widget for the continue with apple/google/fb
 
-    ),
-  );
-}
 
 class _SignInState extends State<SignIn> {
 
-  Future<void> signInWithPhone(PhoneAuthCredential credential) async {
-    try {
-      await FirebaseAuth.instance.signInWithCredential(credential);
-    } on FirebaseAuthException catch (e) {
-      print(e.message);
-    }
+  TextEditingController signInPhoneEmailController = TextEditingController();
+  ExternalAuth externalAuth = ExternalAuth();
+
+
+
+  void googleSignIn() async {
+    appStore.setLoading(true);
+    await externalAuth.signInWithGoogle().then((googleUser) async {
+
+      String firstName = '';
+      String lastName = '';
+      print(googleUser.toString());
+      if (googleUser.displayName
+          .validate()
+          .split(' ')
+          .length >= 1) firstName = googleUser.displayName.splitBefore(' ');
+      if (googleUser.displayName
+          .validate()
+          .split(' ')
+          .length >= 2) lastName = googleUser.displayName.splitAfter(' ');
+
+    }).catchError((e) {
+      appStore.setLoading(false);
+      toast(e.toString());
+    });
+  }
+
+  void appleSignIn() async {
+    appStore.setLoading(true);
+    await externalAuth.appleSignIn().then((appleUser) async {
+      print("in apple");
+      print(appleUser.toString());
+
+    }).catchError((e) {
+      appStore.setLoading(false);
+      toast(e.toString());
+    });
+
+  }
+
+  void fbSignIn() async {
+    print("this is fb sign in");
+  }
+
+
+  bool clickSignInByPhoneEmail() {
+
+  //   TODO verify current phone/email, if not pass return invalid info else jump to check code page
+
+    return false;
+
   }
 
 
   @override
   Widget build(BuildContext context) {
+
+    Widget buildButton(String buttonText, Function() onTapAction) {
+      return
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black),
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: AppButton(
+            onTap:  () async {
+              await onTapAction();
+            },
+            color: Colors.white,
+            textColor: highContrastColor,
+            width: double.infinity,
+            // Fill the available width
+            child: Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.arrow_forward, color: highContrastColor),
+                  // Add some space between icon and text
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 0),
+                      // Adjust the vertical padding here
+                      child: Text(
+                        buttonText,
+                        style: TextStyle(fontSize: 14),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+          ),
+        );
+    }
     return Scaffold(
       appBar: AppBar(
         systemOverlayStyle: SystemUiOverlayStyle(statusBarIconBrightness: appStore.isDarkMode ? Brightness.light : Brightness.dark, statusBarColor: context.scaffoldBackgroundColor),
@@ -113,6 +168,7 @@ class _SignInState extends State<SignIn> {
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: TextField(
+                      controller: signInPhoneEmailController,
                       decoration: InputDecoration(
                         hintText: language.enterYourPhoneEmail,
                         border: OutlineInputBorder(
@@ -127,7 +183,9 @@ class _SignInState extends State<SignIn> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: AppButton(
-                      onTap: () {},
+                      onTap: () async {
+                         clickSignInByPhoneEmail();
+                      },
                       text: language.continueWord,
                       color: primaryColor,
                       textColor: Colors.white,
@@ -190,12 +248,11 @@ class _SignInState extends State<SignIn> {
                   ),
 
                   const SizedBox(height: 10),
-                  buildButton(language.continueWithGoogle),
+                  buildButton(language.continueWithGoogle, googleSignIn),
                   const SizedBox(height: 6),
-
-                  buildButton(language.continueWithFb),
+                  buildButton(language.continueWithApple, appleSignIn),
                   const SizedBox(height: 6),
-                  buildButton(language.continueWithApple),
+                  buildButton(language.continueWithFb, fbSignIn),
 
 
                   const Divider(
@@ -219,8 +276,6 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                   )
-
-
                 ],
               ),
             ),
@@ -229,4 +284,6 @@ class _SignInState extends State<SignIn> {
       ),
     );
   }
+
+
 }

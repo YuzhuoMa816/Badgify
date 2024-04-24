@@ -44,7 +44,15 @@ abstract class BaseLanguage {
 
   String get agreementText;
 
+  String get verified;
 
+  String get theEnteredCodeIsInvalidPleaseTryAgain;
+
+  String get appleSignInNotAvailable;
+
+  String get lblSignInFailed;
+
+  String get lblUserCancelled;
 
 
 }

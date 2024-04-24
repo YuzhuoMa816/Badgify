@@ -58,4 +58,21 @@ class LanguageCn extends BaseLanguage {
   @override
   String get close => '关闭';
 
+  @override
+  String get theEnteredCodeIsInvalidPleaseTryAgain => '输入信息有误，请重新输入';
+
+  @override
+  String get verified => "验证成功";
+
+  @override
+  String get appleSignInNotAvailable => "不支持Apple登陆";
+
+  @override
+  // TODO: implement lblSignInFailed
+  String get lblSignInFailed => throw UnimplementedError();
+
+  @override
+  // TODO: implement lblUserCancelled
+  String get lblUserCancelled => throw UnimplementedError();
+
 }
