@@ -58,4 +58,28 @@ class LanguageCn extends BaseLanguage {
   @override
   String get close => '关闭';
 
+  @override
+  String get theEnteredCodeIsInvalidPleaseTryAgain => '输入信息有误，请重新输入';
+
+  @override
+  String get verified => "验证成功";
+
+  @override
+  String get appleSignInNotAvailable => "不支持Apple登陆";
+
+  @override
+  String get lblSignInFailed => "登陆失败";
+
+  @override
+  String get lblUserCancelled => "用户取消";
+
+  @override
+  String get checkYourCode => "检查你的验证码";
+
+  @override
+  String get checkInboxForVerify => "检查你的六位验证码";
+
+  @override
+  String get verificationCode => "验证码";
+
 }

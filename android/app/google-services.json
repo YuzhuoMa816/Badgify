@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "9900849749",
+    "project_id": "recam-badgify-d5686",
+    "storage_bucket": "recam-badgify-d5686.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9900849749:android:38580a641afd69472d32dc",
+        "android_client_info": {
+          "package_name": "com.example.badgify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "9900849749-eq85dk733k9ee9s0m3inlbi9g5pbkt56.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.badgify",
+            "certificate_hash": "9f502a32017ce875b9ef2f70972b632cdded97fc"
+          }
+        },
+        {
+          "client_id": "9900849749-3ufdb3bkk9os12pifcqsunidetgpdreh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6oiGRCshSox-uGtXqGopOluX5qdidIzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "9900849749-3ufdb3bkk9os12pifcqsunidetgpdreh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "9900849749-v0i1jqsh128lfod9btbpmtsqk5sf6vdm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.badgify"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

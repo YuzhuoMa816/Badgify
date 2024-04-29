@@ -21,9 +21,9 @@ const DISPLAY_TIME_FORMAT = 'h:mm a';
 const USER_APP_TAG = 'userApp';
 const PER_PAGE_CHAT_LIST_COUNT = 50;
 
-const USER_NOT_CREATED = "User not created";
-const USER_CANNOT_LOGIN = "User can't login";
-const USER_NOT_FOUND = "User not found";
+const USER_NOT_CREATED = "User.dart not created";
+const USER_CANNOT_LOGIN = "User.dart can't login";
+const USER_NOT_FOUND = "User.dart not found";
 
 const BOOKING_TYPE_ALL = 'all';
 const CATEGORY_LIST_ALL = "all";
@@ -127,7 +127,7 @@ const CURRENCY_POSITION_LEFT = 'left';
 const CURRENCY_POSITION_RIGHT = 'right';
 //endregion
 
-//region User Types
+//region User.dart Types
 const USER_TYPE_PROVIDER = 'provider';
 const USER_TYPE_HANDYMAN = 'handyman';
 const USER_TYPE_USER = 'user';

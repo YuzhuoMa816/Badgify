@@ -53,12 +53,35 @@ class LanguageEn extends BaseLanguage {
   String get infoCollectionStatement => 'Personal Information Collection Statement';
 
   @override
-  // TODO: implement agreementText
   String get agreementText => 'agreementText need to be finished';
 
   @override
-  // TODO: implement close
   String get close => 'Close';
+
+  @override
+  String get theEnteredCodeIsInvalidPleaseTryAgain => "Invalid info, Please try again";
+
+  @override
+  String get verified => "Verified Success";
+
+  @override
+  String get appleSignInNotAvailable => "Apple login is not supported";
+
+  @override
+  String get lblSignInFailed => "Sign in failed";
+
+  @override
+  String get lblUserCancelled => "User Cancelled";
+
+  @override
+  String get checkYourCode => "Check Your Code";
+
+  @override
+  String get checkInboxForVerify => "Check you inbox inbox for a 6-digit code and enter it below";
+
+  @override
+  String get verificationCode => "Verification Code";
+
 
 
 }
