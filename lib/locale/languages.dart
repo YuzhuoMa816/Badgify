@@ -60,5 +60,32 @@ abstract class BaseLanguage {
 
   String get checkInboxForVerify;
 
+  String get no;
+
+  String get yes;
+
+  String get areYouAgent;
+
+  String get areYouSerPro;
+
+  String get workSpecies;
+
+  String get realEstateAgent;
+
+  String get propertyManager;
+
+  String get photographer;
+
+  String get homeStylist;
+
+  String get other;
+
+  String get iAmA;
+
+  String get iWorkIn;
+
+  String get lJHooker;
+
+  String get handyPlumberEtc;
 
 }

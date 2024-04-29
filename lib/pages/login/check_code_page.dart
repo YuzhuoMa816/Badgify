@@ -4,8 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:flutter_verification_code_field/flutter_verification_code_field.dart';
 
-import '../main.dart';
-import '../utils/colors.dart';
+import '../../main.dart';
+import '../../modals/custom_app_bar.dart';
+import '../../modals/image.dart';
+import '../../modals/satetment_bottom.dart';
+import '../../utils/colors.dart';
+import 'check_estate_manager.dart';
 
 class CheckCode extends StatefulWidget {
   final bool? isPhone;
@@ -27,33 +31,32 @@ class _CheckCodeState extends State<CheckCode> {
     checkCodePhoneEmailController.text = widget.phoneOrEmailInfo ?? '';
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
+    double paddingSize = context.height()*0.01;
     return Scaffold(
-      appBar: AppBar(
-        systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarIconBrightness:
-                appStore.isDarkMode ? Brightness.light : Brightness.dark,
-            statusBarColor: context.scaffoldBackgroundColor),
+      appBar:CustomAppBar(
+        title: '',
+        isDarkMode: appStore.isDarkMode,
       ),
+
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(5.0),
+            padding:  EdgeInsets.all(context.height()*0.01),
             child: Center(
               child: SizedBox(
                 width: context.width() * 0.9,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const SizedBox(height: 15),
+                    SizedBox(height: paddingSize),
                     // Logo pic
-                    Image.asset(
-                      'assets/badgify_logo_long.png',
-                      height: 60,
-                      width: 100,
-                    ),
-                    const SizedBox(height: 30),
+                    const Logo(),
+                    SizedBox(height: context.height()*0.05),
                     Text(
                       language.checkYourCode,
                       textAlign: TextAlign.center,
@@ -70,7 +73,7 @@ class _CheckCodeState extends State<CheckCode> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding:  EdgeInsets.all(paddingSize),
                       child: TextField(
                         controller: checkCodePhoneEmailController,
                         decoration: InputDecoration(
@@ -91,7 +94,7 @@ class _CheckCodeState extends State<CheckCode> {
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding:  EdgeInsets.all(paddingSize),
                       child: TextField(
                         controller: checkCodePhoneEmailController,
                         decoration: InputDecoration(
@@ -120,9 +123,11 @@ class _CheckCodeState extends State<CheckCode> {
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding:  EdgeInsets.all(paddingSize),
                       child: AppButton(
-                        onTap: () async {},
+                        onTap: () async {
+                          push(const CheckEstateManager());
+                        },
                         text: language.continueWord,
                         color: primaryColor,
                         textColor: Colors.white,

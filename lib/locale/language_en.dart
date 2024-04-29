@@ -82,6 +82,46 @@ class LanguageEn extends BaseLanguage {
   @override
   String get verificationCode => "Verification Code";
 
+  @override
+  String get areYouAgent => "Are you a real-estate agent or a property manager?";
 
+  @override
+  String get no => "No";
+
+  @override
+  String get yes => "Yes";
+
+  @override
+  String get areYouSerPro => "Are you a service provider?";
+
+  @override
+  String get workSpecies => "(Photographer, Home Stylist, etc.)";
+
+  @override
+  String get propertyManager => "Property Manager";
+
+  @override
+  String get realEstateAgent => "Real Estate Agent";
+
+  @override
+  String get homeStylist => "Home Stylist";
+
+  @override
+  String get other => "other";
+
+  @override
+  String get photographer => "Photographer";
+
+  @override
+  String get iAmA => "I am A ...";
+
+  @override
+  String get iWorkIn => "I work in ...";
+
+  @override
+  String get handyPlumberEtc => "Handyman / Plumber / etc.";
+
+  @override
+  String get lJHooker => "lj hooker c";
 
 }

@@ -82,4 +82,47 @@ class LanguageCn extends BaseLanguage {
   @override
   String get verificationCode => "验证码";
 
+  @override
+  String get areYouAgent => "你是房地产中介吗";
+
+  @override
+  String get no => "否";
+
+  @override
+  String get yes => "是";
+
+  @override
+  String get areYouSerPro => "你是服务提供商吗?";
+
+  @override
+  String get workSpecies => "(摄影师、家居造型师等)";
+
+  @override
+  String get propertyManager => "物业经理";
+
+  @override
+  String get realEstateAgent => "房地产经纪人";
+
+  @override
+  String get homeStylist => "家庭设计师";
+
+  @override
+  String get other => "其他";
+
+  @override
+  String get photographer => "摄影师";
+
+  @override
+  // TODO: implement iAmA
+  String get iAmA => "我是...";
+
+  @override
+  String get iWorkIn => "我在...工作";
+
+  @override
+  String get handyPlumberEtc => "杂工/水管工等";
+
+  @override
+  String get lJHooker => "lj hooker c";
+
 }

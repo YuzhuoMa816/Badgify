@@ -1,13 +1,16 @@
 import 'package:badgify/main.dart';
-import 'package:badgify/pages/check_code_page.dart';
+import 'package:badgify/pages/login/check_code_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../api/external_platform_auth.dart';
-import '../modals/statement.dart';
-import '../utils/colors.dart';
+import '../../api/external_platform_auth.dart';
+import '../../modals/custom_app_bar.dart';
+import '../../modals/image.dart';
+import '../../modals/satetment_bottom.dart';
+import '../../modals/statement.dart';
+import '../../utils/colors.dart';
 
 
 
@@ -163,30 +166,27 @@ class _SignInState extends State<SignIn> {
           ),
         );
     }
+    double paddingSize = context.height()*0.01;
     return Scaffold(
-      appBar: AppBar(
-        systemOverlayStyle: SystemUiOverlayStyle(statusBarIconBrightness: appStore.isDarkMode ? Brightness.light : Brightness.dark, statusBarColor: context.scaffoldBackgroundColor),
-
+      appBar: CustomAppBar(
+        title: '',
+        isDarkMode: appStore.isDarkMode,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(5.0),
+            padding:  EdgeInsets.all(context.height()*0.01),
             child: Center(
               child: SizedBox(
                 width: context.width() * 0.9,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const SizedBox(height: 15),
+                    SizedBox(height: paddingSize),
                     // Logo pic
-                    Image.asset(
-                      'assets/badgify_logo_long.png',
-                      height: 60,
-                      width: 100,
-                    ),
-                    const SizedBox(height: 30),
-          
+                    const Logo(),
+                    SizedBox(height: context.height()*0.05),
+
                     Text(
                       language.signIn,
                       textAlign: TextAlign.center,
@@ -197,7 +197,7 @@ class _SignInState extends State<SignIn> {
                     ),
                     // phone / email
                     Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding:  EdgeInsets.all(paddingSize),
                       child: TextField(
                         onTap: () {
                           textFieldFocusNode.requestFocus();
@@ -215,7 +215,7 @@ class _SignInState extends State<SignIn> {
                     ),
                     // Continue button
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding:  EdgeInsets.all(paddingSize),
                       child: AppButton(
                         onTap: () async {
                            await clickSignInByPhoneEmail();
@@ -228,7 +228,7 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
           
-                    const SizedBox(height: 10),
+                     SizedBox(height: context.height()*0.02),
                     RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
@@ -254,12 +254,12 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
           
-                    const SizedBox(height: 20),
+                     SizedBox(height: context.height()*0.02),
                     Row(
                       children: [
                         Expanded(
                           child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 16),
+                            margin:  EdgeInsets.symmetric(horizontal: paddingSize),
                             height: 1,
                             color: Colors.grey,
                           ),
@@ -274,7 +274,7 @@ class _SignInState extends State<SignIn> {
                         ),
                         Expanded(
                           child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 16),
+                            margin:  EdgeInsets.symmetric(horizontal: paddingSize),
                             height: 1,
                             color: Colors.grey,
                           ),
@@ -282,35 +282,15 @@ class _SignInState extends State<SignIn> {
                       ],
                     ),
           
-                    const SizedBox(height: 10),
+                     SizedBox(height: paddingSize),
                     buildButton(language.continueWithGoogle, googleSignIn),
-                    const SizedBox(height: 6),
+                     SizedBox(height: paddingSize),
                     buildButton(language.continueWithApple, appleSignIn),
-                    const SizedBox(height: 6),
+                     SizedBox(height: paddingSize),
                     buildButton(language.continueWithFb, fbSignIn),
-          
-          
-                    const Divider(
-                      color: Colors.grey,
-                      thickness: 1.0,
-                      height: 20.0,
-                      indent: 0.0,
-                      endIndent: 0.0,
-                    ),
-          
-                    Center(
-                      child: GestureDetector(
-                        onTap: (){
-                          setState(() {
-                            AgreementModal.showAgreementDialog(context);
-                          });
-                        },
-                        child: Text(
-                          language.infoCollectionStatement,
-                          style: TextStyle(fontSize: 10.0, color: primaryColor),
-                        ),
-                      ),
-                    )
+
+
+                    const InfoCollectionStatement(),
                   ],
                 ),
               ),
