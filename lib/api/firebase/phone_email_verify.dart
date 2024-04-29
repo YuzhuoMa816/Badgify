@@ -6,7 +6,7 @@ import '../../main.dart';
 import '../../utils/normalise_phone_number.dart';
 
 class FirebaseVerify {
-  Verity verity = Verity();
+  Verify verity = Verify();
   PhoneNumberFormatter formatter = PhoneNumberFormatter();
 
   // 0 for invalid, 1 for phone, 2 for Email

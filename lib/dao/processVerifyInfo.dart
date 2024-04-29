@@ -1,5 +1,5 @@
 
-class Verity{
+class Verify{
 
   // 0 for invalid, 1 for phone, 2 for Email
   int checkPhoneOrEmail(String inputText){
