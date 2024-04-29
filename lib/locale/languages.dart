@@ -54,5 +54,11 @@ abstract class BaseLanguage {
 
   String get lblUserCancelled;
 
+  String get checkYourCode;
+
+  String get verificationCode;
+
+  String get checkInboxForVerify;
+
 
 }

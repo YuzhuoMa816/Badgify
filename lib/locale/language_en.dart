@@ -68,10 +68,19 @@ class LanguageEn extends BaseLanguage {
   String get appleSignInNotAvailable => "Apple login is not supported";
 
   @override
-  String get lblSignInFailed => "登录失败";
+  String get lblSignInFailed => "Sign in failed";
 
   @override
-  String get lblUserCancelled => "用户取消";
+  String get lblUserCancelled => "User Cancelled";
+
+  @override
+  String get checkYourCode => "Check Your Code";
+
+  @override
+  String get checkInboxForVerify => "Check you inbox inbox for a 6-digit code and enter it below";
+
+  @override
+  String get verificationCode => "Verification Code";
 
 
 

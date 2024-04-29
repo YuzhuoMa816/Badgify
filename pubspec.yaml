@@ -47,6 +47,9 @@ dependencies:
 
   sign_in_with_apple: ^6.1.0
 
+  #open source dependency
+  flutter_verification_code_field: ^1.0.4
+
 
 
   # The following adds the Cupertino Icons font to your application.

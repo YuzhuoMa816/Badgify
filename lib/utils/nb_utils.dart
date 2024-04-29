@@ -40,3 +40,27 @@ Future<void> initialize({
   selectedLanguageDataModel =
       getSelectedLanguageModel(defaultLanguage: defaultLanguage);
 }
+
+Future<T?> push<T>(
+    Widget widget, {
+      bool isNewTask = false,
+      PageRouteAnimation? pageRouteAnimation,
+      Duration? duration,
+    }) async {
+  if (isNewTask) {
+    return await Navigator.of(getContext).pushAndRemoveUntil(
+      buildPageRoute(
+          widget, pageRouteAnimation ?? pageRouteAnimationGlobal, duration),
+          (route) => false,
+    );
+  } else {
+    return await Navigator.of(getContext).push(
+      buildPageRoute(
+          widget, pageRouteAnimation ?? pageRouteAnimationGlobal, duration),
+    );
+  }
+}
+
+void pop([Object? object]) {
+  if (Navigator.canPop(getContext)) Navigator.pop(getContext, object);
+}
