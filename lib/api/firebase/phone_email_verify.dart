@@ -1,17 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../dao/processVerifyInfo.dart';
 import '../../main.dart';
 import '../../utils/normalise_phone_number.dart';
+import '../../utils/verify.dart';
 
 class FirebaseVerify {
-  Verify verity = Verify();
+  VerifyValidate verity = VerifyValidate();
   PhoneNumberFormatter formatter = PhoneNumberFormatter();
 
   // 0 for invalid, 1 for phone, 2 for Email
   Future<bool> verifyInputText(String inputText) async {
-    int checkResult = verity.checkPhoneOrEmail(inputText);
+    int checkResult = verity.checkPhoneOrEmail(inputText) as int;
     if (checkResult == 1) {
       print("in verifyInputText");
       await FirebaseAuth.instance.verifyPhoneNumber(

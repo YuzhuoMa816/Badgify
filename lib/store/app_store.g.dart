@@ -428,6 +428,38 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
+  late final _$isValidatedAtom =
+      Atom(name: '_AppStore.isValidated', context: context);
+
+  @override
+  bool get isValidated {
+    _$isValidatedAtom.reportRead();
+    return super.isValidated;
+  }
+
+  @override
+  set isValidated(bool value) {
+    _$isValidatedAtom.reportWrite(value, super.isValidated, () {
+      super.isValidated = value;
+    });
+  }
+
+  late final _$verifyCodeAtom =
+      Atom(name: '_AppStore.verifyCode', context: context);
+
+  @override
+  String get verifyCode {
+    _$verifyCodeAtom.reportRead();
+    return super.verifyCode;
+  }
+
+  @override
+  set verifyCode(String value) {
+    _$verifyCodeAtom.reportWrite(value, super.verifyCode, () {
+      super.verifyCode = value;
+    });
+  }
+
   late final _$set24HourFormatAsyncAction =
       AsyncAction('_AppStore.set24HourFormat', context: context);
 
@@ -451,6 +483,14 @@ mixin _$AppStore on _AppStore, Store {
   @override
   Future<void> setUserType(String val) {
     return _$setUserTypeAsyncAction.run(() => super.setUserType(val));
+  }
+
+  late final _$setVerifyCodeAsyncAction =
+      AsyncAction('_AppStore.setVerifyCode', context: context);
+
+  @override
+  Future<void> setVerifyCode(String val) {
+    return _$setVerifyCodeAsyncAction.run(() => super.setVerifyCode(val));
   }
 
   late final _$setAddressAsyncAction =
@@ -629,6 +669,17 @@ mixin _$AppStore on _AppStore, Store {
   }
 
   @override
+  void setValidate(bool val) {
+    final _$actionInfo =
+        _$_AppStoreActionController.startAction(name: '_AppStore.setValidate');
+    try {
+      return super.setValidate(val);
+    } finally {
+      _$_AppStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setUnreadCount(int val) {
     final _$actionInfo = _$_AppStoreActionController.startAction(
         name: '_AppStore.setUnreadCount');
@@ -668,6 +719,8 @@ useMaterialYouTheme: ${useMaterialYouTheme},
 userType: ${userType},
 is24HourFormat: ${is24HourFormat},
 userWalletAmount: ${userWalletAmount},
+isValidated: ${isValidated},
+verifyCode: ${verifyCode},
 userFullName: ${userFullName}
     ''';
   }

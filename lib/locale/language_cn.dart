@@ -125,4 +125,10 @@ class LanguageCn extends BaseLanguage {
   @override
   String get lJHooker => "lj hooker c";
 
+  @override
+  String get otpCodeIsSentToYourMobileNumber => "验证码将发送到您的手机号码";
+
+  @override
+  String get validating => "验证中";
+
 }

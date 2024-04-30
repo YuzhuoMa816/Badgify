@@ -88,4 +88,8 @@ abstract class BaseLanguage {
 
   String get handyPlumberEtc;
 
+  String get validating;
+
+  String get otpCodeIsSentToYourMobileNumber;
+
 }

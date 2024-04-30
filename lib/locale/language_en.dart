@@ -124,4 +124,10 @@ class LanguageEn extends BaseLanguage {
   @override
   String get lJHooker => "lj hooker c";
 
+  @override
+  String get otpCodeIsSentToYourMobileNumber => "code is sent to your Mobile number";
+
+  @override
+  String get validating => "Validating";
+
 }

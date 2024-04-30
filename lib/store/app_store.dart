@@ -95,6 +95,16 @@ abstract class _AppStore with Store {
   @observable
   num userWalletAmount = 0.0;
 
+  @observable
+  bool isValidated = false;
+
+
+  @observable
+  String verifyCode = getStringAsync("");
+
+
+
+
   // @action
   // Future<void> setUserWalletAmount() async {
   //   if (isLoggedIn) {
@@ -120,6 +130,12 @@ abstract class _AppStore with Store {
   Future<void> setUserType(String val) async {
     userType = val;
     await setValue(USER_TYPE, val);
+  }
+
+  @action
+  Future<void> setVerifyCode(String val) async {
+    verifyCode = val;
+    await setValue(VERIFY_CODE, val);
   }
 
   @action
@@ -228,6 +244,12 @@ abstract class _AppStore with Store {
   void setLoading(bool val) {
     isLoading = val;
   }
+
+  @action
+  void setValidate(bool val) {
+    isValidated = val;
+  }
+
 
   @action
   Future<void> setCurrentLocation(bool val) async {

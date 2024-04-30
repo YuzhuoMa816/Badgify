@@ -97,6 +97,7 @@ const USER_TYPE = 'USER_TYPE';
 const HOUR_FORMAT_STATUS = 'HOUR_FORMAT_STATUS';
 const USER_CHANGE_LOG = 'userChangeLog';
 const PERMISSION_STATUS = 'permissionStatus';
+const VERIFY_CODE='verifyCode';
 
 const USE_MATERIAL_YOU_THEME = 'USE_MATERIAL_YOU_THEME';
 const HAS_IN_APP_STORE_REVIEW = 'hasInAppStoreReview1';
