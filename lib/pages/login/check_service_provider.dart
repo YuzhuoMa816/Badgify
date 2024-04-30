@@ -1,3 +1,4 @@
+import 'package:badgify/pages/login/select_agent_manager.dart';
 import 'package:badgify/pages/login/select_service_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import '../../modals/custom_app_bar.dart';
 import '../../modals/image.dart';
 import '../../modals/satetment_bottom.dart';
 import '../../utils/colors.dart';
+import 'collect_all_info.dart';
 
 class CheckServiceProvider extends StatefulWidget {
   const CheckServiceProvider({super.key});
@@ -81,6 +83,7 @@ class _CheckServiceProviderState extends State<CheckServiceProvider> {
                             padding: EdgeInsets.all(paddingSize),
                             child: AppButton(
                               onTap: () async {
+                                push(const CollectAllInfo());
                               },
                               text: language.no,
                               color: Colors.white,

@@ -4,9 +4,13 @@ abstract class BaseLanguage {
 
 
 
+
+
   static BaseLanguage of(BuildContext context) => Localizations.of<BaseLanguage>(context, BaseLanguage)!;
 
   String get login;
+
+  String get password;
 
   String get signIn;
 
@@ -91,5 +95,17 @@ abstract class BaseLanguage {
   String get validating;
 
   String get otpCodeIsSentToYourMobileNumber;
+
+  String get phoneNumberExample;
+
+  String get lastName;
+
+  String get lastNameExample;
+
+  String get firstName;
+
+  String get firstNameExample;
+
+  String get emailExample;
 
 }

@@ -1,3 +1,5 @@
+import 'package:badgify/pages/login/collect_all_info.dart';
+import 'package:badgify/pages/login/select_agent_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -69,7 +71,7 @@ class _TypeTitleState extends State<TypeTitle> {
                     padding: EdgeInsets.all(paddingSize),
                     child: AppButton(
                       onTap: () async {
-
+                        push(const CollectAllInfo());
                       },
                       text: language.continueWord,
                       color: primaryColor,

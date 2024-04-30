@@ -10,8 +10,8 @@ import '../../dao/process_sign_in.dart';
 import '../../modals/custom_app_bar.dart';
 import '../../modals/image.dart';
 import '../../modals/satetment_bottom.dart';
-import '../../modals/statement.dart';
 import '../../utils/colors.dart';
+import 'check_estate_manager.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -35,6 +35,9 @@ Color highContrastColor = getHighContrastColor();
 
 class _SignInState extends State<SignIn> {
   TextEditingController signInPhoneEmailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+
   ExternalAuth externalAuth = ExternalAuth();
   bool isPhone = true;
   ProcessSignIn processSignIn = ProcessSignIn();
@@ -201,6 +204,23 @@ class _SignInState extends State<SignIn> {
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: EdgeInsets.all(paddingSize),
+                      child: TextField(
+                        onTap: () {
+                          textFieldFocusNode.requestFocus();
+                        },
+                        controller: passwordController,
+                        decoration: InputDecoration(
+                          hintText: language.password,
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Colors.black87, width: 1.0),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                      ),
+                    ),
                     // Continue button
                     Padding(
                       padding: EdgeInsets.all(paddingSize),
@@ -241,7 +261,8 @@ class _SignInState extends State<SignIn> {
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                //  jump to sign up
+                                push(const CheckEstateManager());
+
                               },
                           ),
                         ],

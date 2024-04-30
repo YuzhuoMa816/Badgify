@@ -1,3 +1,4 @@
+import 'package:badgify/pages/login/collect_all_info.dart';
 import 'package:badgify/pages/login/type_title_address.dart';
 import 'package:badgify/pages/login/type_working_address.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,6 +22,7 @@ class SelectServiceProvider extends StatefulWidget {
 class _SelectServiceProviderState extends State<SelectServiceProvider> {
   @override
   Widget build(BuildContext context) {
+    String selectedOption = language.photographer;
     double paddingSize = context.height() * 0.01;
 
     return Scaffold(
@@ -49,13 +51,17 @@ class _SelectServiceProviderState extends State<SelectServiceProvider> {
                     ),
                   ),
                   SizedBox(height: context.height() * 0.03),
-
                   Padding(
-                    padding:  EdgeInsets.all(0),
+                    padding: EdgeInsets.all(0),
                     child: RadioButtonGroup<String>(
-                      options: [language.photographer, language.homeStylist, language.other],
+                      options: [
+                        language.photographer,
+                        language.homeStylist,
+                        language.other
+                      ],
                       selectedOption: language.photographer,
                       onChanged: (value) {
+                        selectedOption = value;
                         print('Selected option: $value');
                       },
                     ),
@@ -64,8 +70,12 @@ class _SelectServiceProviderState extends State<SelectServiceProvider> {
                     padding: EdgeInsets.all(paddingSize),
                     child: AppButton(
                       onTap: () async {
-                        push(TypeTitle());
-
+                        print("selectedOption****: $selectedOption");
+                        if (selectedOption == "other") {
+                          push(const TypeTitle());
+                        } else {
+                          push(const CollectAllInfo());
+                        }
                       },
                       text: language.continueWord,
                       color: primaryColor,
@@ -73,8 +83,6 @@ class _SelectServiceProviderState extends State<SelectServiceProvider> {
                       width: context.width(),
                     ),
                   ),
-
-
                 ],
               ),
             ),
@@ -92,5 +100,4 @@ class _SelectServiceProviderState extends State<SelectServiceProvider> {
       ),
     );
   }
-
 }

@@ -131,4 +131,25 @@ class LanguageCn extends BaseLanguage {
   @override
   String get validating => "验证中";
 
+  @override
+  String get password => "密码";
+
+  @override
+  String get lastNameExample => "煜卓";
+
+  @override
+  String get firstNameExample => "马";
+
+  @override
+  String get firstName => "姓";
+
+  @override
+  String get lastName => "名";
+
+  @override
+  String get phoneNumberExample => "+61 412 345 678";
+
+  @override
+  String get emailExample => "jackie@amazingrep.com";
+
 }

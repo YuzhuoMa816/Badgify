@@ -67,16 +67,15 @@ class ProcessSignIn {
   }
 
   Future<void> verifyCredential(String smsCode) async {
-    print("In verifyCredential");
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: appStore.verifyCode, smsCode: smsCode);
-    print("smsCode" + smsCode);
     await FirebaseAuth.instance
         .signInWithCredential(credential)
         .then((UserCredential userCredential) {
       User? user = userCredential.user;
-      print("user*****");
       print(user?.uid);
+      appStore.setUId(user!.uid);
+
       appStore.setValidate(true);
     }).catchError((error) {
       print('Error verifying code: $error');

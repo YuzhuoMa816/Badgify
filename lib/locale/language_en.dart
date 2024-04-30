@@ -130,4 +130,25 @@ class LanguageEn extends BaseLanguage {
   @override
   String get validating => "Validating";
 
+  @override
+  String get password =>"Password";
+
+  @override
+  String get emailExample => "jackie@amazingrep.com";
+
+  @override
+  String get firstName => "First name";
+
+  @override
+  String get firstNameExample => "Jackie";
+
+  @override
+  String get lastName => "Last name";
+
+  @override
+  String get lastNameExample => "Chan";
+
+  @override
+  String get phoneNumberExample => "+61 412 345 678";
+
 }

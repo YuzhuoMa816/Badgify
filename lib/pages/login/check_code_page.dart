@@ -130,22 +130,10 @@ class _CheckCodeState extends State<CheckCode> {
                       padding:  EdgeInsets.all(paddingSize),
                       child: AppButton(
                         onTap: () async {
-                          // await processSignIn.verifyCredential(checkCodeVerifyCodeController.text);
-
-                          print("appStore.verifyCode");
-                          print(appStore.verifyCode);
-                          print(checkCodeVerifyCodeController.text);
-                          PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: appStore.verifyCode, smsCode: checkCodeVerifyCodeController.text);
-
-
-                          print("credential"+credential.toString());
-
-                          await FirebaseAuth.instance.signInWithCredential(credential);
-
-                          print("In ....");
+                          await processSignIn.verifyCredential(checkCodeVerifyCodeController.text);
 
                           if(appStore.isValidated) {
-                            // appStore.setVerifyCode("");
+                            appStore.setVerifyCode("");
                             push(const CheckEstateManager());
                           }
                         },
