@@ -13,13 +13,10 @@ class FirebaseVerify {
   Future<bool> verifyInputText(String inputText) async {
     int checkResult = verity.checkPhoneOrEmail(inputText) as int;
     if (checkResult == 1) {
-      print("in verifyInputText");
       await FirebaseAuth.instance.verifyPhoneNumber(
-
           phoneNumber: formatter.formatAUPhoneNumber(inputText),
           verificationCompleted: (PhoneAuthCredential phoneAuthCredential) async {
             toast(language.verified);
-
             if (isAndroid) {
               await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
             }

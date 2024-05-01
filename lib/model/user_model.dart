@@ -108,11 +108,11 @@ class UserModel {
           title: data['Title'] ?? '',
           createdDate: (data['CreatedDate'] as Timestamp).toDate(),
           lastUpdatedDate: (data['LastUpdatedDate'] as Timestamp).toDate(),
-          isAgentOrManager: data['isAgentOrManager'] ?? false,
-          isServiceProvider: data['isServiceProvider'] ?? false,
-          appleUid: data['appleUid'] ?? '',
-          googleUid: data['googleUid'] ?? '',
-          facebookUid: data['facebookUid'] ?? '');
+          isAgentOrManager: data['IsAgentOrManager'] ?? false,
+          isServiceProvider: data['IsServiceProvider'] ?? false,
+          appleUid: data['AppleUid'] ?? '',
+          googleUid: data['GoogleUid'] ?? '',
+          facebookUid: data['FacebookUid'] ?? '');
     } else {
       return UserModel.empty();
     }
