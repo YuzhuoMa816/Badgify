@@ -18,24 +18,31 @@ class UserModel {
   DateTime lastUpdatedDate;
   bool isAgentOrManager;
   bool isServiceProvider;
+  String googleUid;
+  String facebookUid;
+  String appleUid;
 
   /// Constructor for UserModel.
-  UserModel(
-      {required this.uid,
-      required this.firstName,
-      required this.lastName,
-      required this.email,
-      required this.phoneNumber,
-      this.profilePicture,
-      required this.isEmailVerified,
-      required this.isPhoneVerified,
-      required this.type,
-      this.address,
-      this.title,
-      required this.createdDate,
-      required this.lastUpdatedDate,
-      required this.isAgentOrManager,
-      required this.isServiceProvider});
+  UserModel({
+    required this.uid,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.phoneNumber,
+    this.profilePicture,
+    required this.isEmailVerified,
+    required this.isPhoneVerified,
+    required this.type,
+    this.address,
+    this.title,
+    required this.createdDate,
+    required this.lastUpdatedDate,
+    required this.isAgentOrManager,
+    required this.isServiceProvider,
+    required this.appleUid,
+    required this.googleUid,
+    required this.facebookUid,
+  });
 
   /// Static function to create an empty user model.
   static UserModel empty() => UserModel(
@@ -53,7 +60,10 @@ class UserModel {
       createdDate: DateTime.now(),
       lastUpdatedDate: DateTime.now(),
       isAgentOrManager: false,
-      isServiceProvider: false);
+      isServiceProvider: false,
+      appleUid: '',
+      googleUid: '',
+      facebookUid: '');
 
   /// Convert model to JSON structure for storing data in Firebase.
   Map<String, dynamic> toJson() {
@@ -72,7 +82,10 @@ class UserModel {
       'CreatedDate': createdDate,
       'LastUpdatedDate': lastUpdatedDate,
       'IsServiceProvider': isServiceProvider,
-      'IsAgentOrManager': isAgentOrManager
+      'IsAgentOrManager': isAgentOrManager,
+      'appleUid': appleUid,
+      'googleUid': googleUid,
+      'facebookUid': facebookUid,
     };
   }
 
@@ -96,7 +109,10 @@ class UserModel {
           createdDate: (data['CreatedDate'] as Timestamp).toDate(),
           lastUpdatedDate: (data['LastUpdatedDate'] as Timestamp).toDate(),
           isAgentOrManager: data['isAgentOrManager'] ?? false,
-          isServiceProvider: data['isServiceProvider'] ?? false);
+          isServiceProvider: data['isServiceProvider'] ?? false,
+          appleUid: data['appleUid'] ?? '',
+          googleUid: data['googleUid'] ?? '',
+          facebookUid: data['facebookUid'] ?? '');
     } else {
       return UserModel.empty();
     }

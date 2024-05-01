@@ -76,7 +76,7 @@ class ProcessSignIn {
         .then((UserCredential userCredential) {
       User? user = userCredential.user;
       print(user?.uid);
-      appStore.setUId(user!.uid);
+      appStore.userModel.uid = user!.uid;
 
       appStore.setValidate(true);
     }).catchError((error) {

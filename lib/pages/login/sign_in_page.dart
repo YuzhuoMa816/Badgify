@@ -66,10 +66,12 @@ class _SignInState extends State<SignIn> {
       String firstName = '';
       String lastName = '';
       print(googleUser.toString());
-      if (googleUser.displayName.validate().split(' ').isNotEmpty)
+      if (googleUser.displayName.validate().split(' ').isNotEmpty) {
         firstName = googleUser.displayName.splitBefore(' ');
-      if (googleUser.displayName.validate().split(' ').length >= 2)
+      }
+      if (googleUser.displayName.validate().split(' ').length >= 2) {
         lastName = googleUser.displayName.splitAfter(' ');
+      }
     }).catchError((e) {
       appStore.setLoading(false);
       toast(e.toString());
@@ -128,6 +130,8 @@ class _SignInState extends State<SignIn> {
         ),
         child: AppButton(
           onTap: () async {
+
+
             await onTapAction();
           },
           color: Colors.white,
