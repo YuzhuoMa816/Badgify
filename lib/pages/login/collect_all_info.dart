@@ -140,7 +140,7 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
                                             appStore.userModel.firstName = firstNameTextController.text;
                                             appStore.userModel.lastName = lastNameTextController.text;
                                             appStore.userModel.phoneNumber = phoneNumController.text;
-                                            appStore.userModel.email = phoneNumController.text;
+                                            appStore.userModel.email = emailTextController.text;
                                             print("appStore.userModel");
 
                                             print(appStore.userModel.firstName);
