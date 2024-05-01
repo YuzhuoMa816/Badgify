@@ -3,18 +3,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 /// Model class representing user data.
 class UserModel {
   // Keep those values final which you do not want to update
-  final String uid;
+  String uid;
   String firstName;
   String lastName;
-  final String email;
-  final String phoneNumber;
+  String email;
+  String phoneNumber;
   String? profilePicture;
   bool isEmailVerified;
   bool isPhoneVerified;
   String type;
   String? address;
   String? title;
-  final DateTime createdDate;
+  DateTime createdDate;
   DateTime lastUpdatedDate;
   bool isAgentOrManager;
   bool isServiceProvider;

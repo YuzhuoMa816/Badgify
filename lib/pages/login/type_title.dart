@@ -18,11 +18,15 @@ class TypeTitle extends StatefulWidget {
 }
 
 class _TypeTitleState extends State<TypeTitle> {
+  final GlobalKey<FormState> _typeTitleFormKey = GlobalKey<FormState>();
+  TextEditingController titleTextController = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
 
-    TextEditingController titleTextController = TextEditingController();
     double paddingSize = context.height() * 0.01;
+    String? _title;
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -35,7 +39,9 @@ class _TypeTitleState extends State<TypeTitle> {
           child: Center(
             child: SizedBox(
               width: context.width() * 0.9,
-              child: Column(
+              child: Form(
+                key: _typeTitleFormKey,
+                child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SizedBox(height: paddingSize),
@@ -50,7 +56,12 @@ class _TypeTitleState extends State<TypeTitle> {
                     ),
                   ),
                   SizedBox(height: context.height() * 0.03),
-                  TextField(
+                  TextFormField(
+                    onChanged: (value) {
+                      setState(() {
+                        _title = value;
+                      });
+                    },
                     controller: titleTextController,
                     decoration: InputDecoration(
                       hintText: language.handyPlumberEtc,
@@ -63,14 +74,25 @@ class _TypeTitleState extends State<TypeTitle> {
                         ),
                       ),
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please enter your title";
+                      }
+                      return null;
+                    },
                   ),
                   SizedBox(height: context.height() * 0.1),
                   Padding(
                     padding: EdgeInsets.all(paddingSize),
                     child: AppButton(
                       onTap: () async {
-                        appStore.userModel.title = titleTextController.text;
-                        push(const CollectAllInfo());
+
+                        if (_typeTitleFormKey.currentState!.validate()) {
+                          appStore.userModel.title = titleTextController.text;
+                          push(const CollectAllInfo());
+                        }else{
+                          print("Empty form");
+                        }
                       },
                       text: language.continueWord,
                       color: primaryColor,
@@ -80,6 +102,7 @@ class _TypeTitleState extends State<TypeTitle> {
                   ),
                 ],
               ),
+            ),
             ),
           ),
         ),

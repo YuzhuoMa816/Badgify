@@ -17,23 +17,60 @@ class CollectAllInfo extends StatefulWidget {
 }
 
 class _CollectAllInfoState extends State<CollectAllInfo> {
-
-  TextEditingController phoneNumController = TextEditingController();
+  final GlobalKey<FormState> _createAccountFormKey = GlobalKey<FormState>();
   ProcessSignIn processSignIn = ProcessSignIn();
 
+  TextEditingController phoneNumController = TextEditingController();
+  TextEditingController firstNameTextController = TextEditingController();
+  TextEditingController lastNameTextController = TextEditingController();
+  TextEditingController emailTextController = TextEditingController();
 
   Future<void> clickSignInByPhoneEmail(textInfo) async {
-
     await processSignIn.processPhoneOrEmail(context, textInfo);
     // update the page state
-    setState(() {
-    });
+    setState(() {});
   }
-
 
   @override
   Widget build(BuildContext context) {
     double paddingSize = context.height() * 0.01;
+    String? _firstName;
+    String? _lastName;
+    String? _phoneNumber;
+    String? _email;
+
+    Widget customTextForm(
+        TextEditingController? textController,
+        String hintText,
+        String labelText,
+        String validatorText,
+        String onChangedValue) {
+      return TextFormField(
+        onChanged: (value) {
+          setState(() {
+            onChangedValue = value;
+          });
+        },
+        controller: textController,
+        decoration: InputDecoration(
+          hintText: hintText,
+          labelText: labelText,
+          border: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(
+              color: Colors.red,
+              width: 2.0,
+            ),
+          ),
+        ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return validatorText;
+          }
+          return null;
+        },
+      );
+    }
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -47,109 +84,86 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
                   child: Center(
                       child: SizedBox(
                           width: context.width() * 0.9,
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                SizedBox(height: paddingSize),
-                                const Logo(),
-                                SizedBox(height: context.height() * 0.05),
-                                Text(
-                                  language.createAccount,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 24,
-                                  ),
-                                ),
-                                SizedBox(height: context.height() * 0.03),
-                                TextField(
-                                  decoration: InputDecoration(
-                                    hintText: language.firstNameExample,
-                                    labelText: language.firstName,
-                                    border: const OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                                      borderSide: BorderSide(
-                                        color: Colors.red,
-                                        width: 2.0,
+                          child: Form(
+                              key: _createAccountFormKey,
+                              child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    SizedBox(height: paddingSize),
+                                    const Logo(),
+                                    SizedBox(height: context.height() * 0.05),
+                                    Text(
+                                      language.createAccount,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24,
                                       ),
                                     ),
+                                    SizedBox(height: context.height() * 0.03),
+                                    customTextForm(
+                                        firstNameTextController,
+                                        language.firstNameExample,
+                                        language.firstName,
+                                        "Please enter your first name",
+                                        "Yuzhuo"),
+                                    SizedBox(height: context.height() * 0.03),
+                                    customTextForm(
+                                        lastNameTextController,
+                                        language.lastNameExample,
+                                        language.lastName,
+                                        "Please enter your last name",
+                                        "Yuzhuo"),
+                                    SizedBox(height: context.height() * 0.03),
+                                    customTextForm(
+                                        phoneNumController,
+                                        language.phoneNumberExample,
+                                        language.phoneNumber,
+                                        "Please enter your phone number",
+                                        "Yuzhuo"),
+                                    SizedBox(height: context.height() * 0.03),
+                                    customTextForm(
+                                        emailTextController,
+                                        language.emailExample,
+                                        language.email,
+                                        "Please enter your email",
+                                        "Yuzhuo"),
+                                    SizedBox(height: context.height() * 0.03),
+                                    Padding(
+                                      padding: EdgeInsets.all(paddingSize),
+                                      child: AppButton(
+                                        onTap: () async {
+                                          if (_createAccountFormKey
+                                              .currentState!
+                                              .validate()) {
+                                            appStore.userModel.firstName = firstNameTextController.text;
+                                            appStore.userModel.lastName = lastNameTextController.text;
+                                            appStore.userModel.phoneNumber = phoneNumController.text;
+                                            appStore.userModel.email = phoneNumController.text;
+                                            await clickSignInByPhoneEmail(
+                                                phoneNumController.text);
 
-                                  ),
-                                ),
-                                SizedBox(height: context.height() * 0.03),
-
-                                TextField(
-                                  decoration: InputDecoration(
-                                    hintText: language.lastNameExample,
-                                    labelText: language.lastName,
-                                    border: const OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                                      borderSide: BorderSide(
-                                        color: Colors.red,
-                                        width: 2.0,
+                                            if (appStore.isLoading == false) {
+                                              push(
+                                                CheckCode(
+                                                    isPhone: true,
+                                                    phoneOrEmailInfo:
+                                                        phoneNumController
+                                                            .text),
+                                              );
+                                            }
+                                          } else {
+                                            print("Empty form");
+                                          }
+                                        },
+                                        text: language.continueWord,
+                                        color: primaryColor,
+                                        textColor: Colors.white,
+                                        width: context.width(),
                                       ),
                                     ),
-                                  ),
-                                ),
-                                SizedBox(height: context.height() * 0.03),
-
-                                TextField(
-                                  controller: phoneNumController,
-                                  decoration: InputDecoration(
-                                    hintText: language.phoneNumberExample,
-                                    labelText: language.phoneNumber,
-                                    border: const OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                                      borderSide: BorderSide(
-                                        color: Colors.red,
-                                        width: 2.0,
-                                      ),
-                                    ),
-                                    suffixIcon: Icon(Icons.call),
-                                  ),
-                                ),
-                                SizedBox(height: context.height() * 0.03),
-                                TextField(
-                                  decoration: InputDecoration(
-                                    hintText: language.emailExample,
-                                    labelText: language.email,
-                                    border: const OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                                      borderSide: BorderSide(
-                                        color: Colors.red,
-                                        width: 2.0,
-                                      ),
-                                    ),
-                                    suffixIcon: Icon(Icons.mail),
-                                  ),
-                                ),
-                                SizedBox(height: context.height() * 0.03),
-                                Padding(
-                                  padding: EdgeInsets.all(paddingSize),
-                                  child: AppButton(
-                                    onTap: () async {
-                                      await clickSignInByPhoneEmail(phoneNumController.text);
-
-                                      if(appStore.isLoading==false){
-                                        push(
-                                          CheckCode(
-                                              isPhone: true, phoneOrEmailInfo: phoneNumController.text),
-                                        );
-                                      }
-
-                                    },
-                                    text: language.continueWord,
-                                    color: primaryColor,
-                                    textColor: Colors.white,
-                                    width: context.width(),
-                                  ),
-                                ),
-
-
-
-
-
-                              ])))))),
+                                  ]))))))),
     );
   }
 }

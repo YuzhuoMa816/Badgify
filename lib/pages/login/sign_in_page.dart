@@ -37,7 +37,7 @@ Color highContrastColor = getHighContrastColor();
 class _SignInState extends State<SignIn> {
   TextEditingController signInPhoneEmailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _signInFormKey = GlobalKey<FormState>();
 
   ExternalAuth externalAuth = ExternalAuth();
   bool isPhone = true;
@@ -51,13 +51,7 @@ class _SignInState extends State<SignIn> {
     textFieldFocusNode = FocusNode();
   }
 
-  void save(){
-    var form = _formKey.currentState;
-    if(form!.validate()){
-      debugPrint("form valid");
-      form.save();
-    }
-  }
+
 
 
   @override
@@ -125,6 +119,7 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
+
     Widget buildButton(String buttonText, Function() onTapAction) {
       return Container(
         decoration: BoxDecoration(
@@ -167,6 +162,7 @@ class _SignInState extends State<SignIn> {
 
     double paddingSize = context.height() * 0.01;
     String? _phoneEmail;
+    String? _password;
     return Scaffold(
       appBar: CustomAppBar(
         title: '',
@@ -180,7 +176,7 @@ class _SignInState extends State<SignIn> {
               child: SizedBox(
                 width: context.width() * 0.9,
                 child: Form(
-                  key: _formKey,
+                  key: _signInFormKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -220,8 +216,7 @@ class _SignInState extends State<SignIn> {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              print("Empty!!!");
-                              return "input the email or phone number";
+                              return "Email / Phone can not be empty";
                             }
                             return null;
                           },
@@ -233,9 +228,14 @@ class _SignInState extends State<SignIn> {
 
                       Padding(
                         padding: EdgeInsets.all(paddingSize),
-                        child: TextField(
+                        child: TextFormField(
                           onTap: () {
                             textFieldFocusNode.requestFocus();
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              _password = value;
+                            });
                           },
                           controller: passwordController,
                           obscureText: true,
@@ -247,6 +247,12 @@ class _SignInState extends State<SignIn> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Password can not be empty";
+                            }
+                            return null;
+                          },
                         ),
                       ),
                       // Continue button
@@ -254,8 +260,8 @@ class _SignInState extends State<SignIn> {
                         padding: EdgeInsets.all(paddingSize),
                         child: AppButton(
                           onTap: () async {
-                            if (_formKey.currentState!.validate()) {
-                              _formKey.currentState?.save();
+                            if (_signInFormKey.currentState!.validate()) {
+                              // _formKey.currentState?.save();
                               push(const TypeTitle());
                             }else{
                               print("Empty form");
