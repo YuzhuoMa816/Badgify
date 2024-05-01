@@ -152,4 +152,34 @@ class LanguageCn extends BaseLanguage {
   @override
   String get emailExample => "jackie@amazingrep.com";
 
+  @override
+  String get emailPhoneNotEmpty => "邮箱/电话不能为空";
+
+  @override
+  String get invalidCode => "验证码错误";
+
+  @override
+  String get invalidCodeNotificationText => "输入的验证码不正确。请再试一次。";
+
+  @override
+  String get passwordNotEmpty => "密码不可以为空";
+
+  @override
+  String get pleaseEnterEmail => "请输入您的邮箱";
+
+  @override
+  String get pleaseEnterFirstName => "请输入您的名字";
+
+  @override
+  String get pleaseEnterLastName => "请输入您的姓氏";
+
+  @override
+  String get pleaseEnterPhoneNum => "请输入您的电话号码";
+
+  @override
+  String get pleaseEnterTitle => "请输入您的头衔";
+
+  @override
+  String get pleaseEnterWorkPlace => "请输入您的工作地点";
+
 }

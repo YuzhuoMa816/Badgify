@@ -76,7 +76,7 @@ class _TypeTitleState extends State<TypeTitle> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Please enter your title";
+                        return  language.pleaseEnterTitle;
                       }
                       return null;
                     },

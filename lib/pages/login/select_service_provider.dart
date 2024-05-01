@@ -62,7 +62,6 @@ class _SelectServiceProviderState extends State<SelectServiceProvider> {
                       selectedOption: language.photographer,
                       onChanged: (value) {
                         selectedOption = value;
-                        print('Selected option: $value');
                       },
                     ),
                   ),

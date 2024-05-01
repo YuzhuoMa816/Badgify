@@ -143,8 +143,8 @@ class _CheckCodeState extends State<CheckCode> {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  title: Text("Invalid Verification Code"),
-                                  content: Text("The verification code you entered is incorrect. Please try again."),
+                                  title: Text(language.invalidCode ),
+                                  content: Text(language.invalidCodeNotificationText),
                                   actions: [
                                     TextButton(
                                       onPressed: () {

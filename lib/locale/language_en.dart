@@ -151,4 +151,33 @@ class LanguageEn extends BaseLanguage {
   @override
   String get phoneNumberExample => "+61 412 345 678";
 
+  @override
+  String get emailPhoneNotEmpty => "Email / Phone can not be empty";
+
+  @override
+  String get passwordNotEmpty => "Password can not be empty";
+
+  @override
+  String get invalidCode => "Invalid Code";
+
+  @override
+  String get invalidCodeNotificationText => "The verification code you entered is incorrect. Please try again.";
+
+  @override
+  String get pleaseEnterFirstName => "Please enter your first name";
+
+  @override
+  String get pleaseEnterLastName => "Please enter your last name";
+
+  @override
+  String get pleaseEnterPhoneNum => "Please enter your phone number";
+
+  @override
+  String get pleaseEnterEmail => "Please enter your email";
+
+  @override
+  String get pleaseEnterTitle => "Please enter your title";
+
+  @override
+  String get pleaseEnterWorkPlace => "Please enter your work place";
 }

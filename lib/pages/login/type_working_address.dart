@@ -77,7 +77,7 @@ class _TypeWorkingAddressState extends State<TypeWorkingAddress> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Please enter your work place";
+                          return language.pleaseEnterWorkPlace;
                         }
                         return null;
                       },

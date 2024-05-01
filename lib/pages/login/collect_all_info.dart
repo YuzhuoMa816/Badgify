@@ -106,29 +106,30 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
                                         firstNameTextController,
                                         language.firstNameExample,
                                         language.firstName,
-                                        "Please enter your first name",
+                                        language.pleaseEnterFirstName,
                                         "Yuzhuo"),
                                     SizedBox(height: context.height() * 0.03),
                                     customTextForm(
                                         lastNameTextController,
                                         language.lastNameExample,
                                         language.lastName,
-                                        "Please enter your last name",
+                                        language.pleaseEnterLastName,
                                         "Yuzhuo"),
                                     SizedBox(height: context.height() * 0.03),
                                     customTextForm(
                                         phoneNumController,
                                         language.phoneNumberExample,
                                         language.phoneNumber,
-                                        "Please enter your phone number",
+                                        language.pleaseEnterPhoneNum,
                                         "Yuzhuo"),
                                     SizedBox(height: context.height() * 0.03),
                                     customTextForm(
                                         emailTextController,
                                         language.emailExample,
                                         language.email,
-                                        "Please enter your email",
+                                        language.pleaseEnterEmail,
                                         "Yuzhuo"),
+
                                     SizedBox(height: context.height() * 0.03),
                                     Padding(
                                       padding: EdgeInsets.all(paddingSize),
@@ -141,10 +142,7 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
                                             appStore.userModel.lastName = lastNameTextController.text;
                                             appStore.userModel.phoneNumber = phoneNumController.text;
                                             appStore.userModel.email = emailTextController.text;
-                                            print("appStore.userModel");
 
-                                            print(appStore.userModel.firstName);
-                                            print(appStore.userModel.toJson());
                                             await clickSignInByPhoneEmail(
                                                 phoneNumController.text);
 

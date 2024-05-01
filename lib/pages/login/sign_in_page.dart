@@ -216,7 +216,7 @@ class _SignInState extends State<SignIn> {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return "Email / Phone can not be empty";
+                              return language.emailPhoneNotEmpty;
                             }
                             return null;
                           },
@@ -249,7 +249,7 @@ class _SignInState extends State<SignIn> {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return "Password can not be empty";
+                              return language.passwordNotEmpty;
                             }
                             return null;
                           },

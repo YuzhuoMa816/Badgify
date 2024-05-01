@@ -108,4 +108,24 @@ abstract class BaseLanguage {
 
   String get emailExample;
 
+  String get emailPhoneNotEmpty;
+
+  String get passwordNotEmpty;
+
+  String get invalidCodeNotificationText;
+
+  String get invalidCode;
+
+  String get pleaseEnterFirstName;
+
+  String get pleaseEnterLastName;
+
+  String get pleaseEnterPhoneNum;
+
+  String get pleaseEnterEmail;
+
+  String get pleaseEnterTitle;
+
+  String get pleaseEnterWorkPlace;
+
 }
