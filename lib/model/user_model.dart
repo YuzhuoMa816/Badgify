@@ -16,6 +16,8 @@ class UserModel {
   String? title;
   final DateTime createdDate;
   DateTime lastUpdatedDate;
+  bool isAgentOrManager;
+  bool isServiceProvider;
 
   /// Constructor for UserModel.
   UserModel(
@@ -31,7 +33,9 @@ class UserModel {
       this.address,
       this.title,
       required this.createdDate,
-      required this.lastUpdatedDate});
+      required this.lastUpdatedDate,
+      required this.isAgentOrManager,
+      required this.isServiceProvider});
 
   /// Static function to create an empty user model.
   static UserModel empty() => UserModel(
@@ -47,7 +51,9 @@ class UserModel {
       address: '',
       title: '',
       createdDate: DateTime.now(),
-      lastUpdatedDate: DateTime.now());
+      lastUpdatedDate: DateTime.now(),
+      isAgentOrManager: false,
+      isServiceProvider: false);
 
   /// Convert model to JSON structure for storing data in Firebase.
   Map<String, dynamic> toJson() {
@@ -64,7 +70,9 @@ class UserModel {
       'Address': address,
       'Title': title,
       'CreatedDate': createdDate,
-      'LastUpdatedDate': lastUpdatedDate
+      'LastUpdatedDate': lastUpdatedDate,
+      'IsServiceProvider': isServiceProvider,
+      'IsAgentOrManager': isAgentOrManager
     };
   }
 
@@ -74,20 +82,21 @@ class UserModel {
     if (document.data() != null) {
       final data = document.data()!;
       return UserModel(
-        uid: document.id,
-        firstName: data['FirstName'] ?? '',
-        lastName: data['LastName'] ?? '',
-        email: data['Email'] ?? '',
-        phoneNumber: data['PhoneNumber'] ?? '',
-        profilePicture: data['ProfilePicture'] ?? '', 
-        isEmailVerified: data['IsEmailVerified'] ?? false,
-        isPhoneVerified: data['IsPhoneVerified'] ?? false,
-        type: data['Type'] ?? '',
-        address: data['Address'] ?? '',
-        title: data['Title'] ?? '',
-        createdDate: (data['CreatedDate'] as Timestamp).toDate(),
-        lastUpdatedDate: (data['LastUpdatedDate'] as Timestamp).toDate()
-      );
+          uid: document.id,
+          firstName: data['FirstName'] ?? '',
+          lastName: data['LastName'] ?? '',
+          email: data['Email'] ?? '',
+          phoneNumber: data['PhoneNumber'] ?? '',
+          profilePicture: data['ProfilePicture'] ?? '',
+          isEmailVerified: data['IsEmailVerified'] ?? false,
+          isPhoneVerified: data['IsPhoneVerified'] ?? false,
+          type: data['Type'] ?? '',
+          address: data['Address'] ?? '',
+          title: data['Title'] ?? '',
+          createdDate: (data['CreatedDate'] as Timestamp).toDate(),
+          lastUpdatedDate: (data['LastUpdatedDate'] as Timestamp).toDate(),
+          isAgentOrManager: data['isAgentOrManager'] ?? false,
+          isServiceProvider: data['isServiceProvider'] ?? false);
     } else {
       return UserModel.empty();
     }

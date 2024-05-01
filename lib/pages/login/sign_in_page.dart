@@ -1,5 +1,6 @@
 import 'package:badgify/main.dart';
 import 'package:badgify/pages/login/check_code_page.dart';
+import 'package:badgify/pages/login/type_title.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,7 +37,7 @@ Color highContrastColor = getHighContrastColor();
 class _SignInState extends State<SignIn> {
   TextEditingController signInPhoneEmailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   ExternalAuth externalAuth = ExternalAuth();
   bool isPhone = true;
@@ -49,6 +50,15 @@ class _SignInState extends State<SignIn> {
     super.initState();
     textFieldFocusNode = FocusNode();
   }
+
+  void save(){
+    var form = _formKey.currentState;
+    if(form!.validate()){
+      debugPrint("form valid");
+      form.save();
+    }
+  }
+
 
   @override
   void dispose() {
@@ -99,18 +109,16 @@ class _SignInState extends State<SignIn> {
   }
 
   Future<void> clickSignInByPhoneEmail(textInfo) async {
-
     await processSignIn.processPhoneOrEmail(context, textInfo);
     // update the page state
-    setState(() {
-    });
+    setState(() {});
   }
 
-  void infoIsPhone(textInfo){
+  void infoIsPhone(textInfo) {
     String verifyResult = processSignIn.checkPhoneOrEmail(textInfo);
-    if (verifyResult=="Phone"){
+    if (verifyResult == "Phone") {
       isPhone = true;
-    }else{
+    } else {
       isPhone = false;
     }
   }
@@ -158,6 +166,7 @@ class _SignInState extends State<SignIn> {
     }
 
     double paddingSize = context.height() * 0.01;
+    String? _phoneEmail;
     return Scaffold(
       appBar: CustomAppBar(
         title: '',
@@ -170,144 +179,171 @@ class _SignInState extends State<SignIn> {
             child: Center(
               child: SizedBox(
                 width: context.width() * 0.9,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SizedBox(height: paddingSize),
-                    // Logo pic
-                    const Logo(),
-                    SizedBox(height: context.height() * 0.05),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SizedBox(height: paddingSize),
+                      // Logo pic
+                      const Logo(),
+                      SizedBox(height: context.height() * 0.05),
 
-                    Text(
-                      language.signIn,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
+                      Text(
+                        language.signIn,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                        ),
                       ),
-                    ),
-                    // phone / email
-                    Padding(
-                      padding: EdgeInsets.all(paddingSize),
-                      child: TextField(
-                        onTap: () {
-                          textFieldFocusNode.requestFocus();
-                        },
-                        controller: signInPhoneEmailController,
-                        decoration: InputDecoration(
-                          hintText: language.enterYourPhoneEmail,
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Colors.black87, width: 1.0),
-                            borderRadius: BorderRadius.circular(10.0),
+                      // phone / email
+                      Padding(
+                        padding: EdgeInsets.all(paddingSize),
+                        child: TextFormField(
+                          onTap: () {
+                            textFieldFocusNode.requestFocus();
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              _phoneEmail = value;
+                            });
+                          },
+                          controller: signInPhoneEmailController,
+                          decoration: InputDecoration(
+                            hintText: language.enterYourPhoneEmail,
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.black87, width: 1.0),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              print("Empty!!!");
+                              return "input the email or phone number";
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            _phoneEmail = value;
+                          },
+                        ),
+                      ),
+
+                      Padding(
+                        padding: EdgeInsets.all(paddingSize),
+                        child: TextField(
+                          onTap: () {
+                            textFieldFocusNode.requestFocus();
+                          },
+                          controller: passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            hintText: language.password,
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.black87, width: 1.0),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(paddingSize),
-                      child: TextField(
-                        onTap: () {
-                          textFieldFocusNode.requestFocus();
-                        },
-                        controller: passwordController,
-                        decoration: InputDecoration(
-                          hintText: language.password,
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Colors.black87, width: 1.0),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
+                      // Continue button
+                      Padding(
+                        padding: EdgeInsets.all(paddingSize),
+                        child: AppButton(
+                          onTap: () async {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState?.save();
+                              push(const TypeTitle());
+                            }else{
+                              print("Empty form");
+                            }
+
+                            // jump to main page instead
+                            // await clickSignInByPhoneEmail(signInPhoneEmailController.text);
+                            // infoIsPhone(signInPhoneEmailController.text);
+                            // if(appStore.isLoading==false){
+                            //   push(
+                            //      CheckCode(
+                            //         isPhone: isPhone, phoneOrEmailInfo: signInPhoneEmailController.text),
+                            //   );
+                            // }
+                          },
+                          text: language.continueWord,
+                          color: primaryColor,
+                          textColor: Colors.white,
+                          width: context.width(),
                         ),
                       ),
-                    ),
-                    // Continue button
-                    Padding(
-                      padding: EdgeInsets.all(paddingSize),
-                      child: AppButton(
-                        onTap: () async {
-                          await clickSignInByPhoneEmail(signInPhoneEmailController.text);
-                          infoIsPhone(signInPhoneEmailController.text);
-                          if(appStore.isLoading==false){
-                            push(
-                               CheckCode(
-                                  isPhone: isPhone, phoneOrEmailInfo: signInPhoneEmailController.text),
-                            );
-                          }
-                        },
-                        text: language.continueWord,
-                        color: primaryColor,
-                        textColor: Colors.white,
-                        width: context.width(),
-                      ),
-                    ),
 
-                    SizedBox(height: context.height() * 0.02),
-                    RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
+                      SizedBox(height: context.height() * 0.02),
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: '${language.dontHaveAccount}?  ',
+                              style: const TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            TextSpan(
+                              text: language.createAccount,
+                              style: const TextStyle(
+                                color: Color.fromRGBO(53, 173, 225, 1.0),
+                                fontWeight: FontWeight.bold,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  push(const CheckEstateManager());
+                                },
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(height: context.height() * 0.02),
+                      Row(
                         children: [
-                          TextSpan(
-                            text: '${language.dontHaveAccount}?  ',
-                            style: const TextStyle(
-                              color: Colors.black,
+                          Expanded(
+                            child: Container(
+                              margin:
+                                  EdgeInsets.symmetric(horizontal: paddingSize),
+                              height: 1,
+                              color: Colors.grey,
                             ),
                           ),
-                          TextSpan(
-                            text: language.createAccount,
+                          Text(
+                            language.or,
                             style: const TextStyle(
-                              color: Color.fromRGBO(53, 173, 225, 1.0),
                               fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 18,
                             ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                push(const CheckEstateManager());
-
-                              },
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin:
+                                  EdgeInsets.symmetric(horizontal: paddingSize),
+                              height: 1,
+                              color: Colors.grey,
+                            ),
                           ),
                         ],
                       ),
-                    ),
 
-                    SizedBox(height: context.height() * 0.02),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            margin:
-                                EdgeInsets.symmetric(horizontal: paddingSize),
-                            height: 1,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        Text(
-                          language.or,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: 18,
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            margin:
-                                EdgeInsets.symmetric(horizontal: paddingSize),
-                            height: 1,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
+                      SizedBox(height: paddingSize),
+                      buildButton(language.continueWithGoogle, googleSignIn),
+                      SizedBox(height: paddingSize),
+                      buildButton(language.continueWithApple, appleSignIn),
+                      SizedBox(height: paddingSize),
+                      buildButton(language.continueWithFb, fbSignIn),
 
-                    SizedBox(height: paddingSize),
-                    buildButton(language.continueWithGoogle, googleSignIn),
-                    SizedBox(height: paddingSize),
-                    buildButton(language.continueWithApple, appleSignIn),
-                    SizedBox(height: paddingSize),
-                    buildButton(language.continueWithFb, fbSignIn),
-
-                    const InfoCollectionStatement(),
-                  ],
+                      const InfoCollectionStatement(),
+                    ],
+                  ),
                 ),
               ),
             ),

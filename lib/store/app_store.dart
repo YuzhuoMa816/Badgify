@@ -5,6 +5,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../locale/app_localizations.dart';
 import '../main.dart';
+import '../model/user_model.dart';
 import '../utils/colors.dart';
 import '../utils/config.dart';
 import '../utils/constant.dart';
@@ -102,6 +103,8 @@ abstract class _AppStore with Store {
   @observable
   String verifyCode = getStringAsync("");
 
+  @observable
+  UserModel userModel = UserModel.empty();
 
 
 

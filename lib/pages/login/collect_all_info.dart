@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../dao/process_sign_in.dart';
 import '../../main.dart';
 import '../../modals/custom_app_bar.dart';
 import '../../modals/image.dart';
 import '../../utils/colors.dart';
+import 'check_code_page.dart';
 
 class CollectAllInfo extends StatefulWidget {
   const CollectAllInfo({super.key});
@@ -15,6 +17,20 @@ class CollectAllInfo extends StatefulWidget {
 }
 
 class _CollectAllInfoState extends State<CollectAllInfo> {
+
+  TextEditingController phoneNumController = TextEditingController();
+  ProcessSignIn processSignIn = ProcessSignIn();
+
+
+  Future<void> clickSignInByPhoneEmail(textInfo) async {
+
+    await processSignIn.processPhoneOrEmail(context, textInfo);
+    // update the page state
+    setState(() {
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     double paddingSize = context.height() * 0.01;
@@ -78,6 +94,7 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
                                 SizedBox(height: context.height() * 0.03),
 
                                 TextField(
+                                  controller: phoneNumController,
                                   decoration: InputDecoration(
                                     hintText: language.phoneNumberExample,
                                     labelText: language.phoneNumber,
@@ -88,6 +105,7 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
                                         width: 2.0,
                                       ),
                                     ),
+                                    suffixIcon: Icon(Icons.call),
                                   ),
                                 ),
                                 SizedBox(height: context.height() * 0.03),
@@ -102,6 +120,7 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
                                         width: 2.0,
                                       ),
                                     ),
+                                    suffixIcon: Icon(Icons.mail),
                                   ),
                                 ),
                                 SizedBox(height: context.height() * 0.03),
@@ -109,7 +128,15 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
                                   padding: EdgeInsets.all(paddingSize),
                                   child: AppButton(
                                     onTap: () async {
-                                      push(const CollectAllInfo());
+                                      await clickSignInByPhoneEmail(phoneNumController.text);
+
+                                      if(appStore.isLoading==false){
+                                        push(
+                                          CheckCode(
+                                              isPhone: true, phoneOrEmailInfo: phoneNumController.text),
+                                        );
+                                      }
+
                                     },
                                     text: language.continueWord,
                                     color: primaryColor,

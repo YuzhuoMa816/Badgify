@@ -1,5 +1,5 @@
 import 'package:badgify/pages/login/collect_all_info.dart';
-import 'package:badgify/pages/login/type_title_address.dart';
+import 'package:badgify/pages/login/type_title.dart';
 import 'package:badgify/pages/login/type_working_address.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +70,6 @@ class _SelectServiceProviderState extends State<SelectServiceProvider> {
                     padding: EdgeInsets.all(paddingSize),
                     child: AppButton(
                       onTap: () async {
-                        print("selectedOption****: $selectedOption");
                         if (selectedOption == "other") {
                           push(const TypeTitle());
                         } else {

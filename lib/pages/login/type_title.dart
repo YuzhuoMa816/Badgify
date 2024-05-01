@@ -15,12 +15,13 @@ class TypeTitle extends StatefulWidget {
 
   @override
   State<TypeTitle> createState() => _TypeTitleState();
-
 }
 
 class _TypeTitleState extends State<TypeTitle> {
   @override
   Widget build(BuildContext context) {
+
+    TextEditingController titleTextController = TextEditingController();
     double paddingSize = context.height() * 0.01;
 
     return Scaffold(
@@ -49,7 +50,8 @@ class _TypeTitleState extends State<TypeTitle> {
                     ),
                   ),
                   SizedBox(height: context.height() * 0.03),
-                   TextField(
+                  TextField(
+                    controller: titleTextController,
                     decoration: InputDecoration(
                       hintText: language.handyPlumberEtc,
                       labelText: language.iAmA,
@@ -61,16 +63,13 @@ class _TypeTitleState extends State<TypeTitle> {
                         ),
                       ),
                     ),
-
                   ),
-
                   SizedBox(height: context.height() * 0.1),
-
-
                   Padding(
                     padding: EdgeInsets.all(paddingSize),
                     child: AppButton(
                       onTap: () async {
+                        appStore.userModel.title = titleTextController.text;
                         push(const CollectAllInfo());
                       },
                       text: language.continueWord,
@@ -96,5 +95,4 @@ class _TypeTitleState extends State<TypeTitle> {
       ),
     );
   }
-
 }

@@ -460,6 +460,22 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
+  late final _$userModelAtom =
+      Atom(name: '_AppStore.userModel', context: context);
+
+  @override
+  UserModel get userModel {
+    _$userModelAtom.reportRead();
+    return super.userModel;
+  }
+
+  @override
+  set userModel(UserModel value) {
+    _$userModelAtom.reportWrite(value, super.userModel, () {
+      super.userModel = value;
+    });
+  }
+
   late final _$set24HourFormatAsyncAction =
       AsyncAction('_AppStore.set24HourFormat', context: context);
 
@@ -721,6 +737,7 @@ is24HourFormat: ${is24HourFormat},
 userWalletAmount: ${userWalletAmount},
 isValidated: ${isValidated},
 verifyCode: ${verifyCode},
+userModel: ${userModel},
 userFullName: ${userFullName}
     ''';
   }

@@ -71,6 +71,7 @@ class _CheckServiceProviderState extends State<CheckServiceProvider> {
                             padding: EdgeInsets.all(paddingSize),
                             child: AppButton(
                               onTap: () async {
+                                appStore.userModel.isServiceProvider=true;
                                 push(SelectServiceProvider());
                               },
                               text: language.yes,

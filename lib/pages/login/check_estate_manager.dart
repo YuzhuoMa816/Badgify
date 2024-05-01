@@ -61,6 +61,7 @@ class _CheckEstateManagerState extends State<CheckEstateManager> {
                     padding: EdgeInsets.all(paddingSize),
                     child: AppButton(
                       onTap: () async {
+                        appStore.userModel.isAgentOrManager = true;
                         push(SelectRealEstate());
                       },
                       text: language.yes,

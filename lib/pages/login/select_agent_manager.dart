@@ -21,6 +21,7 @@ class _SelectRealEstateState extends State<SelectRealEstate> {
   @override
   Widget build(BuildContext context) {
     double paddingSize = context.height() * 0.01;
+    String selectedOption = language.photographer;
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -48,14 +49,16 @@ class _SelectRealEstateState extends State<SelectRealEstate> {
                     ),
                   ),
                   SizedBox(height: context.height() * 0.03),
-
                   Padding(
-                    padding:  EdgeInsets.all(0),
+                    padding: EdgeInsets.all(0),
                     child: RadioButtonGroup<String>(
-                      options: [language.realEstateAgent, language.propertyManager],
+                      options: [
+                        language.realEstateAgent,
+                        language.propertyManager
+                      ],
                       selectedOption: language.realEstateAgent,
                       onChanged: (value) {
-                        print('Selected option: $value');
+                        selectedOption = value;
                       },
                     ),
                   ),
@@ -63,7 +66,9 @@ class _SelectRealEstateState extends State<SelectRealEstate> {
                     padding: EdgeInsets.all(paddingSize),
                     child: AppButton(
                       onTap: () async {
-                        push(TypeWorkingAddress());
+                        appStore.userModel.title = selectedOption;
+                        print("appStore.userModel.title: ${appStore.userModel.title}");
+                        push(const TypeWorkingAddress());
                       },
                       text: language.continueWord,
                       color: primaryColor,
@@ -71,8 +76,6 @@ class _SelectRealEstateState extends State<SelectRealEstate> {
                       width: context.width(),
                     ),
                   ),
-
-
                 ],
               ),
             ),

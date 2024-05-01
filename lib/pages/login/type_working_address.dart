@@ -1,5 +1,6 @@
 import 'package:badgify/pages/login/collect_all_info.dart';
 import 'package:badgify/pages/login/select_agent_manager.dart';
+import 'package:badgify/store/app_store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -21,6 +22,8 @@ class _TypeWorkingAddressState extends State<TypeWorkingAddress> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController workingPlaceController = TextEditingController();
+
     double paddingSize = context.height() * 0.01;
 
     return Scaffold(
@@ -50,6 +53,7 @@ class _TypeWorkingAddressState extends State<TypeWorkingAddress> {
                   ),
                   SizedBox(height: context.height() * 0.03),
                    TextField(
+                     controller: workingPlaceController,
                       decoration: InputDecoration(
                         hintText: language.lJHooker ,
                         labelText: language.iWorkIn,
@@ -61,7 +65,6 @@ class _TypeWorkingAddressState extends State<TypeWorkingAddress> {
                           ),
                         ),
                       ),
-
                   ),
 
                   SizedBox(height: context.height() * 0.1),
@@ -69,7 +72,9 @@ class _TypeWorkingAddressState extends State<TypeWorkingAddress> {
                   Padding(
                     padding: EdgeInsets.all(paddingSize),
                     child: AppButton(
+
                       onTap: () async {
+                        appStore.userModel.address = workingPlaceController.text;
                         push(const CollectAllInfo());
 
                       },
