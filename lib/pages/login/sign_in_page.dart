@@ -51,9 +51,6 @@ class _SignInState extends State<SignIn> {
     textFieldFocusNode = FocusNode();
   }
 
-
-
-
   @override
   void dispose() {
     textFieldFocusNode.dispose();
@@ -72,6 +69,8 @@ class _SignInState extends State<SignIn> {
       if (googleUser.displayName.validate().split(' ').length >= 2) {
         lastName = googleUser.displayName.splitAfter(' ');
       }
+
+      appStore.setLoading(false);
     }).catchError((e) {
       appStore.setLoading(false);
       toast(e.toString());
@@ -121,7 +120,6 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-
     Widget buildButton(String buttonText, Function() onTapAction) {
       return Container(
         decoration: BoxDecoration(
@@ -130,9 +128,7 @@ class _SignInState extends State<SignIn> {
         ),
         child: AppButton(
           onTap: () async {
-
-
-            await onTapAction();
+            bool isExistUser = await onTapAction();
           },
           color: Colors.white,
           textColor: highContrastColor,
@@ -267,7 +263,7 @@ class _SignInState extends State<SignIn> {
                             if (_signInFormKey.currentState!.validate()) {
                               // _formKey.currentState?.save();
                               push(const TypeTitle());
-                            }else{
+                            } else {
                               print("Empty form");
                             }
 
@@ -304,6 +300,7 @@ class _SignInState extends State<SignIn> {
                               style: const TextStyle(
                                 color: Color.fromRGBO(53, 173, 225, 1.0),
                                 fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {

@@ -62,6 +62,7 @@ class _SelectRealEstateState extends State<SelectRealEstate> {
                       },
                     ),
                   ),
+                  SizedBox(height: context.height() * 0.05),
                   Padding(
                     padding: EdgeInsets.all(paddingSize),
                     child: AppButton(

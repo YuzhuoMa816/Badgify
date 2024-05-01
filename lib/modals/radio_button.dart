@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class RadioButtonGroup<T> extends StatefulWidget {
   final List<T> options;
@@ -33,30 +34,43 @@ class _RadioButtonGroupState<T> extends State<RadioButtonGroup<T>> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: widget.options.map((option) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Radio<T>(
-                  value: option,
-                  groupValue: _selectedOption,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedOption = value;
-                    });
-                    if (widget.onChanged != null) {
-                      widget.onChanged!(value as T);
-                    }
-                  },
-                ),
-                SizedBox(width: 5),
-                Text(option.toString()),
-              ],
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  _selectedOption = option;
+                });
+                if (widget.onChanged != null) {
+                  widget.onChanged!(option);
+                }
+              },
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Radio<T>(
+                        value: option,
+                        groupValue: _selectedOption,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedOption = value;
+                          });
+                          if (widget.onChanged != null) {
+                            widget.onChanged!(value as T);
+                          }
+                        },
+                      ),
+                      SizedBox(width: context.height() * 0.01),
+                      Text(option.toString()),
+                    ],
+                  ),
+                  SizedBox(height:  context.height() * 0.01),
+                ],
+              ),
             );
           }).toList(),
         ),
       ),
     );
   }
-
-
 }

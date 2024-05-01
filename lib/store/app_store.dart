@@ -106,6 +106,9 @@ abstract class _AppStore with Store {
   @observable
   UserModel userModel = UserModel.empty();
 
+  @observable
+  bool isExistUser = false;
+
 
 
   // @action
@@ -252,6 +255,12 @@ abstract class _AppStore with Store {
   void setValidate(bool val) {
     isValidated = val;
   }
+
+  @action
+  void setIsExistUser(bool val) {
+    isExistUser = val;
+  }
+
 
 
   @action

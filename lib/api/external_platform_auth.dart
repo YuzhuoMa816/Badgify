@@ -25,6 +25,7 @@ class ExternalAuth {
 
       final User currentUser = FirebaseAuth.instance.currentUser!;
       assert(user.uid == currentUser.uid);
+      appStore.userModel.googleUid = currentUser.uid;
 
       print(user.email);
 
@@ -32,6 +33,7 @@ class ExternalAuth {
 
       return user;
     } else {
+      print("No such google account");
       appStore.setLoading(false);
       throw Exception("USER_NOT_CREATED");
     }

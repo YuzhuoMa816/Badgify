@@ -476,6 +476,22 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
+  late final _$isExistUserAtom =
+      Atom(name: '_AppStore.isExistUser', context: context);
+
+  @override
+  bool get isExistUser {
+    _$isExistUserAtom.reportRead();
+    return super.isExistUser;
+  }
+
+  @override
+  set isExistUser(bool value) {
+    _$isExistUserAtom.reportWrite(value, super.isExistUser, () {
+      super.isExistUser = value;
+    });
+  }
+
   late final _$set24HourFormatAsyncAction =
       AsyncAction('_AppStore.set24HourFormat', context: context);
 
@@ -696,6 +712,17 @@ mixin _$AppStore on _AppStore, Store {
   }
 
   @override
+  void setIsExistUser(bool val) {
+    final _$actionInfo = _$_AppStoreActionController.startAction(
+        name: '_AppStore.setIsExistUser');
+    try {
+      return super.setIsExistUser(val);
+    } finally {
+      _$_AppStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setUnreadCount(int val) {
     final _$actionInfo = _$_AppStoreActionController.startAction(
         name: '_AppStore.setUnreadCount');
@@ -738,6 +765,7 @@ userWalletAmount: ${userWalletAmount},
 isValidated: ${isValidated},
 verifyCode: ${verifyCode},
 userModel: ${userModel},
+isExistUser: ${isExistUser},
 userFullName: ${userFullName}
     ''';
   }
