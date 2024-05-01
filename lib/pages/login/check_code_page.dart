@@ -11,6 +11,7 @@ import '../../modals/custom_app_bar.dart';
 import '../../modals/image.dart';
 import '../../modals/satetment_bottom.dart';
 import '../../utils/colors.dart';
+import '../home_page.dart';
 import 'check_estate_manager.dart';
 
 class CheckCode extends StatefulWidget {
@@ -134,7 +135,26 @@ class _CheckCodeState extends State<CheckCode> {
 
                           if(appStore.isValidated) {
                             appStore.setVerifyCode("");
-                            push(const CheckEstateManager());
+                            appStore.userModel.isPhoneVerified = true;
+                            push(const HomePage(), isNewTask:true);
+                          }else{
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("Invalid Verification Code"),
+                                  content: Text("The verification code you entered is incorrect. Please try again."),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text("OK"),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           }
                         },
                         text: language.continueWord,

@@ -141,6 +141,10 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
                                             appStore.userModel.lastName = lastNameTextController.text;
                                             appStore.userModel.phoneNumber = phoneNumController.text;
                                             appStore.userModel.email = phoneNumController.text;
+                                            print("appStore.userModel");
+
+                                            print(appStore.userModel.firstName);
+                                            print(appStore.userModel.toJson());
                                             await clickSignInByPhoneEmail(
                                                 phoneNumController.text);
 

@@ -67,7 +67,6 @@ class _SelectRealEstateState extends State<SelectRealEstate> {
                     child: AppButton(
                       onTap: () async {
                         appStore.userModel.title = selectedOption;
-                        print("appStore.userModel.title: ${appStore.userModel.title}");
                         push(const TypeWorkingAddress());
                       },
                       text: language.continueWord,

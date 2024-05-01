@@ -77,7 +77,7 @@ class LanguageEn extends BaseLanguage {
   String get checkYourCode => "Check Your Code";
 
   @override
-  String get checkInboxForVerify => "Check you inbox inbox for a 6-digit code and enter it below";
+  String get checkInboxForVerify => "Check your inbox for a 6-digit code and enter it below";
 
   @override
   String get verificationCode => "Verification Code";

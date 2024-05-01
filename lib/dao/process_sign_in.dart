@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../data/repositories/user_repository.dart';
+import '../model/user_model.dart';
 import '../utils/config.dart';
 
 class ProcessSignIn {
@@ -81,4 +83,9 @@ class ProcessSignIn {
       print('Error verifying code: $error');
     });
   }
+
+  void submitCreateAccountInfo(UserModel user){
+    saveUserRecord(user);
+  }
+
 }
