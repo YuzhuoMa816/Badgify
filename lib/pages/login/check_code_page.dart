@@ -136,6 +136,7 @@ class _CheckCodeState extends State<CheckCode> {
                           if(appStore.isValidated) {
                             appStore.setVerifyCode("");
                             appStore.userModel.isPhoneVerified = true;
+                            processSignIn.submitCreateAccountInfo(appStore.userModel);
                             push(const HomePage(), isNewTask:true);
                           }else{
                             showDialog(
