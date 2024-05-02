@@ -24,8 +24,16 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
   TextEditingController phoneNumController = TextEditingController();
   TextEditingController firstNameTextController = TextEditingController();
   TextEditingController lastNameTextController = TextEditingController();
-  TextEditingController emailTextController = TextEditingController();
+  // pre-write email
+  TextEditingController emailTextController() {
+    if(appStore.googleLoginEmail == ""){
+      return TextEditingController(text: "");
 
+    }else{
+      return TextEditingController(text: appStore.googleLoginEmail);
+    }
+
+  }
   Future<void> clickSignInByPhoneEmail(textInfo) async {
     await processSignIn.processPhoneOrEmail(context, textInfo);
     // update the page state
@@ -125,7 +133,7 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
                                         "Yuzhuo"),
                                     SizedBox(height: context.height() * 0.03),
                                     customTextForm(
-                                        emailTextController,
+                                        emailTextController(),
                                         language.emailExample,
                                         language.email,
                                         language.pleaseEnterEmail,
@@ -143,7 +151,7 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
                                               appStore.userModel.firstName = firstNameTextController.text;
                                               appStore.userModel.lastName = lastNameTextController.text;
                                               appStore.userModel.phoneNumber = phoneNumController.text;
-                                              appStore.userModel.email = emailTextController.text;
+                                              appStore.userModel.email = emailTextController().text;
                                               push(SetPassword());
                                           }
 

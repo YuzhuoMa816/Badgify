@@ -1,5 +1,5 @@
 import 'package:badgify/main.dart';
-import 'package:badgify/pages/login/check_code_page.dart';
+import 'package:badgify/pages/home_page.dart';
 import 'package:badgify/pages/login/type_title.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,6 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../api/external_platform_auth.dart';
 import '../../dao/process_sign_in.dart';
-import '../../data/repositories/user_repository.dart';
 import '../../modals/custom_app_bar.dart';
 import '../../modals/image.dart';
 import '../../modals/satetment_bottom.dart';
@@ -62,16 +61,15 @@ class _SignInState extends State<SignIn> {
     appStore.setLoading(true);
     await externalAuth.signInWithGoogle().then((googleUser) async {
       print(googleUser.toString());
-
-
       appStore.userModel.googleUid = googleUser.uid;
       appStore.googleLoginEmail = googleUser.email!;
 
-      // TODO if current user created account, login, else, create account
 
-      await fetchUserDetailsByGoogleId(googleUser.uid);
-
-
+      if (await processSignIn.verifyGoogleUser(googleUser.uid)==null){
+        push(const CheckEstateManager());
+      }else{
+        push(const HomePage());
+      }
       appStore.setLoading(false);
     }).catchError((e) {
       appStore.setLoading(false);
@@ -130,7 +128,7 @@ class _SignInState extends State<SignIn> {
         ),
         child: AppButton(
           onTap: () async {
-            bool isExistUser = await onTapAction();
+            await onTapAction();
           },
           color: Colors.white,
           textColor: highContrastColor,

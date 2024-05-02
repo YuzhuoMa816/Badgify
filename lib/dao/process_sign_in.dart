@@ -84,7 +84,18 @@ class ProcessSignIn {
     });
   }
 
-  void submitCreateAccountInfo(UserModel user){
+  Future<UserModel?> verifyGoogleUser(String googleUserUid) async {
+    UserModel? user = await fetchUserDetailsByGoogleId(googleUserUid);
+    if (user==null){
+      return null;
+    } else{
+      return user;
+    }
+  }
+
+
+
+    void submitCreateAccountInfo(UserModel user){
     saveUserRecord(user);
   }
 

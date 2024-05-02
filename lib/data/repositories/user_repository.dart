@@ -57,19 +57,19 @@ Future<void> removeUserRecord(String userId) async {
 }
 
 /// Function to fetch user details based on google ID.
-Future<UserModel> fetchUserDetailsByGoogleId(String googleUid) async {
+Future<UserModel?> fetchUserDetailsByGoogleId(String googleUid) async {
   try {
     FirebaseFirestore db = FirebaseFirestore.instance;
     final documentSnapshot = await db
         .collection("Users")
-        .where("googleUid", isEqualTo: googleUid)
+        .where("GoogleUid", isEqualTo: googleUid)
         .limit(1)
         .get();
 
     if (documentSnapshot.docs.isNotEmpty) {
       return UserModel.fromSnapshot(documentSnapshot.docs.first);
     } else {
-      return UserModel.empty();
+      return null;
     }
   } on FirebaseException catch (e) {
     throw BFirebaseException(e.code).message;
