@@ -145,7 +145,6 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
                                               appStore.userModel.phoneNumber = phoneNumController.text;
                                               appStore.userModel.email = emailTextController.text;
                                               push(SetPassword());
-
                                           }
 
 

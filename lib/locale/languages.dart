@@ -130,6 +130,9 @@ abstract class BaseLanguage {
 
   String get repeatPassword;
 
+  String get didNotReceiveCode;
+
+  String get sendAgain;
 
 
 }

@@ -185,4 +185,10 @@ class LanguageCn extends BaseLanguage {
   @override
   String get repeatPassword => "确认密码";
 
+  @override
+  String get didNotReceiveCode => "没有收到验证码?";
+
+  @override
+  String get sendAgain => "重新发送";
+
 }

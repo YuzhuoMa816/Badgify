@@ -183,4 +183,10 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get repeatPassword => "Repeat Password";
+
+  @override
+  String get didNotReceiveCode => "Did not receive verification code?";
+
+  @override
+  String get sendAgain => "Send again";
 }
