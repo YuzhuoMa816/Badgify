@@ -8,6 +8,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../api/external_platform_auth.dart';
 import '../../dao/process_sign_in.dart';
+import '../../data/repositories/user_repository.dart';
 import '../../modals/custom_app_bar.dart';
 import '../../modals/image.dart';
 import '../../modals/satetment_bottom.dart';
@@ -60,15 +61,16 @@ class _SignInState extends State<SignIn> {
   void googleSignIn() async {
     appStore.setLoading(true);
     await externalAuth.signInWithGoogle().then((googleUser) async {
-      String firstName = '';
-      String lastName = '';
       print(googleUser.toString());
-      if (googleUser.displayName.validate().split(' ').isNotEmpty) {
-        firstName = googleUser.displayName.splitBefore(' ');
-      }
-      if (googleUser.displayName.validate().split(' ').length >= 2) {
-        lastName = googleUser.displayName.splitAfter(' ');
-      }
+
+
+      appStore.userModel.googleUid = googleUser.uid;
+      appStore.googleLoginEmail = googleUser.email!;
+
+      // TODO if current user created account, login, else, create account
+
+      await fetchUserDetailsByGoogleId(googleUser.uid);
+
 
       appStore.setLoading(false);
     }).catchError((e) {

@@ -86,10 +86,10 @@ class UserModel {
       'LastUpdatedDate': lastUpdatedDate,
       'IsServiceProvider': isServiceProvider,
       'IsAgentOrManager': isAgentOrManager,
-      'appleUid': appleUid,
-      'googleUid': googleUid,
-      'facebookUid': facebookUid,
-      'emailPasswordUid': emailPasswordUid,
+      'AppleUid': appleUid,
+      'GoogleUid': googleUid,
+      'FacebookUid': facebookUid,
+      'EmailPasswordUid': emailPasswordUid,
 
     };
   }

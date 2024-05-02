@@ -23,13 +23,7 @@ class ExternalAuth {
 
       assert(!user.isAnonymous);
 
-      final User currentUser = FirebaseAuth.instance.currentUser!;
-      assert(user.uid == currentUser.uid);
-      appStore.userModel.googleUid = currentUser.uid;
-
-      print(user.email);
-
-      await googleSignIn.signOut();
+      // await googleSignIn.signOut();
 
       return user;
     } else {
