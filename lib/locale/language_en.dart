@@ -180,4 +180,7 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get pleaseEnterWorkPlace => "Please enter your work place";
+
+  @override
+  String get repeatPassword => "Repeat Password";
 }

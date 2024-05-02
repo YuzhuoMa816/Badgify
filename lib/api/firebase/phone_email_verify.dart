@@ -40,4 +40,37 @@ class FirebaseVerify {
     return false;
   }
 
+  Future<void> emailPasswordLogin(String emailAddress,String password) async{
+    appStore.setLoading(true);
+    UserCredential? userCredential;
+    try {
+      userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailAddress,
+        password: password,
+      );
+
+      appStore.userModel.emailPasswordUid = userCredential.user!.uid;
+      print("Email verify success");
+
+      appStore.setLoading(false);
+
+
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        toast('The password provided is too weak.');
+        appStore.setLoading(false);
+      } else if (e.code == 'email-already-in-use') {
+        appStore.setLoading(false);
+        toast('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+
+  }
+
+
+
+
+
 }

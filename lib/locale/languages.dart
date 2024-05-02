@@ -128,4 +128,8 @@ abstract class BaseLanguage {
 
   String get pleaseEnterWorkPlace;
 
+  String get repeatPassword;
+
+
+
 }

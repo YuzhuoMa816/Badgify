@@ -15,17 +15,15 @@ import '../home_page.dart';
 import 'check_estate_manager.dart';
 
 class CheckCode extends StatefulWidget {
-  final bool? isPhone;
-  final String? phoneOrEmailInfo;
 
-  const CheckCode({super.key, this.isPhone, this.phoneOrEmailInfo});
+  const CheckCode({super.key});
 
   @override
   State<CheckCode> createState() => _CheckCodeState();
 }
 
 class _CheckCodeState extends State<CheckCode> {
-  TextEditingController checkCodePhoneEmailController = TextEditingController();
+  TextEditingController checkCodePhoneController = TextEditingController();
   TextEditingController checkCodeVerifyCodeController = TextEditingController();
 
   ProcessSignIn processSignIn = ProcessSignIn();
@@ -33,7 +31,7 @@ class _CheckCodeState extends State<CheckCode> {
   @override
   void initState() {
     super.initState();
-    checkCodePhoneEmailController.text = widget.phoneOrEmailInfo ?? '';
+    checkCodePhoneController.text = appStore.userModel.phoneNumber ?? '';
   }
 
 
@@ -80,17 +78,16 @@ class _CheckCodeState extends State<CheckCode> {
                     Padding(
                       padding:  EdgeInsets.all(paddingSize),
                       child: TextField(
-                        controller: checkCodePhoneEmailController,
+                        controller: checkCodePhoneController,
                         decoration: InputDecoration(
                           suffixIcon: Icon(Icons.edit),
-                          hintText: widget.phoneOrEmailInfo,
                           border: OutlineInputBorder(
                             borderSide: const BorderSide(
                                 color: Colors.black87, width: 1.0),
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          prefixIcon: Icon(
-                            widget.isPhone == true ? Icons.phone : Icons.email,
+                          prefixIcon: const Icon(
+                            Icons.phone,
                             color: Colors.black87,
                           ),
                           contentPadding: EdgeInsets.symmetric(vertical: 13),
@@ -132,13 +129,12 @@ class _CheckCodeState extends State<CheckCode> {
                       child: AppButton(
                         onTap: () async {
                           await processSignIn.verifyCredential(checkCodeVerifyCodeController.text);
-
                           if(appStore.isValidated) {
                             appStore.setVerifyCode("");
                             appStore.userModel.isPhoneVerified = true;
                             processSignIn.submitCreateAccountInfo(appStore.userModel);
                             push(const HomePage(), isNewTask:true);
-                          }else{
+                          } else{
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {

@@ -492,6 +492,22 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
+  late final _$googleLoginEmailAtom =
+      Atom(name: '_AppStore.googleLoginEmail', context: context);
+
+  @override
+  String get googleLoginEmail {
+    _$googleLoginEmailAtom.reportRead();
+    return super.googleLoginEmail;
+  }
+
+  @override
+  set googleLoginEmail(String value) {
+    _$googleLoginEmailAtom.reportWrite(value, super.googleLoginEmail, () {
+      super.googleLoginEmail = value;
+    });
+  }
+
   late final _$set24HourFormatAsyncAction =
       AsyncAction('_AppStore.set24HourFormat', context: context);
 
@@ -661,6 +677,14 @@ mixin _$AppStore on _AppStore, Store {
     return _$setLoggedInAsyncAction.run(() => super.setLoggedIn(val));
   }
 
+  late final _$setGoogleEmailAsyncAction =
+      AsyncAction('_AppStore.setGoogleEmail', context: context);
+
+  @override
+  Future<void> setGoogleEmail(String val) {
+    return _$setGoogleEmailAsyncAction.run(() => super.setGoogleEmail(val));
+  }
+
   late final _$setCurrentLocationAsyncAction =
       AsyncAction('_AppStore.setCurrentLocation', context: context);
 
@@ -766,6 +790,7 @@ isValidated: ${isValidated},
 verifyCode: ${verifyCode},
 userModel: ${userModel},
 isExistUser: ${isExistUser},
+googleLoginEmail: ${googleLoginEmail},
 userFullName: ${userFullName}
     ''';
   }

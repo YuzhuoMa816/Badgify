@@ -109,6 +109,9 @@ abstract class _AppStore with Store {
   @observable
   bool isExistUser = false;
 
+  @observable
+  String googleLoginEmail = getStringAsync("");
+
 
 
   // @action
@@ -149,6 +152,8 @@ abstract class _AppStore with Store {
     address = val;
     await setValue(ADDRESS, val);
   }
+
+
 
   @action
   Future<void> setUserProfile(String val) async {
@@ -259,6 +264,11 @@ abstract class _AppStore with Store {
   @action
   void setIsExistUser(bool val) {
     isExistUser = val;
+  }
+
+  @action
+  Future<void> setGoogleEmail(String val) async {
+    googleLoginEmail = val;
   }
 
 

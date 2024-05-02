@@ -182,4 +182,7 @@ class LanguageCn extends BaseLanguage {
   @override
   String get pleaseEnterWorkPlace => "请输入您的工作地点";
 
+  @override
+  String get repeatPassword => "确认密码";
+
 }

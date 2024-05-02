@@ -1,3 +1,4 @@
+import 'package:badgify/pages/login/set_password.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -135,29 +136,43 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
                                       padding: EdgeInsets.all(paddingSize),
                                       child: AppButton(
                                         onTap: () async {
+
                                           if (_createAccountFormKey
                                               .currentState!
                                               .validate()) {
-                                            appStore.userModel.firstName = firstNameTextController.text;
-                                            appStore.userModel.lastName = lastNameTextController.text;
-                                            appStore.userModel.phoneNumber = phoneNumController.text;
-                                            appStore.userModel.email = emailTextController.text;
+                                              appStore.userModel.firstName = firstNameTextController.text;
+                                              appStore.userModel.lastName = lastNameTextController.text;
+                                              appStore.userModel.phoneNumber = phoneNumController.text;
+                                              appStore.userModel.email = emailTextController.text;
+                                              push(SetPassword());
 
-                                            await clickSignInByPhoneEmail(
-                                                phoneNumController.text);
-
-                                            if (appStore.isLoading == false) {
-                                              push(
-                                                CheckCode(
-                                                    isPhone: true,
-                                                    phoneOrEmailInfo:
-                                                        phoneNumController
-                                                            .text),
-                                              );
-                                            }
-                                          } else {
-                                            print("Empty form");
                                           }
+
+
+
+                                          // if (_createAccountFormKey
+                                          //     .currentState!
+                                          //     .validate()) {
+                                          //   appStore.userModel.firstName = firstNameTextController.text;
+                                          //   appStore.userModel.lastName = lastNameTextController.text;
+                                          //   appStore.userModel.phoneNumber = phoneNumController.text;
+                                          //   appStore.userModel.email = emailTextController.text;
+                                          //
+                                          //   await clickSignInByPhoneEmail(
+                                          //       phoneNumController.text);
+                                          //
+                                          //   if (appStore.isLoading == false) {
+                                          //     push(
+                                          //       CheckCode(
+                                          //           isPhone: true,
+                                          //           phoneOrEmailInfo:
+                                          //               phoneNumController
+                                          //                   .text),
+                                          //     );
+                                          //   }
+                                          // } else {
+                                          //   print("Empty form");
+                                          // }
                                         },
                                         text: language.continueWord,
                                         color: primaryColor,

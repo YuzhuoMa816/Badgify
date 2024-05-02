@@ -60,7 +60,6 @@ class _RadioButtonGroupState<T> extends State<RadioButtonGroup<T>> {
                           }
                         },
                       ),
-                      SizedBox(width: context.height() * 0.01),
                       Text(option.toString()),
                     ],
                   ),
