@@ -42,16 +42,6 @@ class _SetPasswordState extends State<SetPassword> {
     return null;
   }
 
-  Future<void> handlePhoneSignIn(textInfo) async {
-    await processSignIn.processPhoneOrEmailSignIn(context, textInfo);
-    // update the page state
-    setState(() {});
-    if (appStore.isLoading == false) {
-      print("Pass");
-      push(CheckCode());
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     double paddingSize = context.height() * 0.01;
