@@ -37,7 +37,7 @@ class _CheckCodeState extends State<CheckCode> {
   }
 
   Future<void> clickSignInByPhone(textInfo) async {
-    await processSignIn.processPhoneOrEmail(context, textInfo);
+    await processSignIn.processPhoneOrEmailSignIn(context, textInfo);
     // update the page state
     setState(() {});
   }

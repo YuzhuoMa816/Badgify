@@ -172,8 +172,19 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
                                             emailTextController.text;
                                         print("appStore.userModel.email");
                                         print(appStore.userModel.email);
-                                        // TODO if google sign in, no password needed
-                                        push(SetPassword());
+
+                                        //  if google sign in, no password needed
+                                        if(appStore.googleLoginEmail != ""){
+                                          await processSignIn.processPhoneOrEmailSignIn(context, appStore.userModel.phoneNumber);
+                                          // update the page state
+                                          setState(() {});
+                                          if (appStore.isLoading == false) {
+                                            print("Pass");
+                                            push(CheckCode());
+                                          }
+                                        }else {
+                                          push(const SetPassword());
+                                        }
                                       }
                                     },
                                     text: language.continueWord,

@@ -104,7 +104,7 @@ class _SignInState extends State<SignIn> {
   }
 
   Future<void> signInByPhoneOrEmail(textInfo) async {
-    await processSignIn.processPhoneOrEmail(context, textInfo);
+    await processSignIn.processPhoneOrEmailSignIn(context, textInfo);
     // update the page state
     setState(() {});
   }

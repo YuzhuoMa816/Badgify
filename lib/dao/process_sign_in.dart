@@ -12,7 +12,7 @@ class ProcessSignIn {
   VerifyValidate verifyValidate = VerifyValidate();
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  Future<void> processPhoneOrEmail(
+  Future<void> processPhoneOrEmailSignIn(
       BuildContext context, String userData) async {
     hideKeyboard(context);
     appStore.setLoading(true);
@@ -133,4 +133,5 @@ class ProcessSignIn {
     // store new user into the Database
     saveUserRecord(user);
   }
+
 }

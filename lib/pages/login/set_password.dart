@@ -43,9 +43,13 @@ class _SetPasswordState extends State<SetPassword> {
   }
 
   Future<void> handlePhoneSignIn(textInfo) async {
-    await processSignIn.processPhoneOrEmail(context, textInfo);
+    await processSignIn.processPhoneOrEmailSignIn(context, textInfo);
     // update the page state
     setState(() {});
+    if (appStore.isLoading == false) {
+      print("Pass");
+      push(CheckCode());
+    }
   }
 
   @override
@@ -142,13 +146,14 @@ class _SetPasswordState extends State<SetPassword> {
 
                                               await firebaseVerify.emailPasswordSignIn(appStore.userModel.email, passwordController.text );
                                               // send the verify code
-                                              await handlePhoneSignIn(
-                                                  appStore.userModel.phoneNumber);
-
+                                              await processSignIn.processPhoneOrEmailSignIn(context, appStore.userModel.phoneNumber);
+                                              // update the page state
+                                              setState(() {});
                                               if (appStore.isLoading == false) {
                                                 print("Pass");
                                                 push(CheckCode());
                                               }
+
                                             }
                                           },
                                           text: language.continueWord,
