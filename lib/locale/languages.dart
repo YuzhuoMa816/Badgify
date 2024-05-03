@@ -134,5 +134,7 @@ abstract class BaseLanguage {
 
   String get sendAgain;
 
+  String get passwordRule;
+
 
 }

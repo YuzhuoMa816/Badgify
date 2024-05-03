@@ -26,9 +26,17 @@ class _SelectServiceProviderState extends State<SelectServiceProvider> {
     double paddingSize = context.height() * 0.01;
 
     return Scaffold(
-      appBar: CustomAppBar(
-        title: '',
-        isDarkMode: appStore.isDarkMode,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: ()  {
+            appStore.userModel.serviceProviderOccupation = '';
+            Navigator.of(context).pop();
+
+          },
+        ),
+        title: const Text(''),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -72,6 +80,7 @@ class _SelectServiceProviderState extends State<SelectServiceProvider> {
                         if (selectedOption == "other") {
                           push(const TypeTitle());
                         } else {
+                          appStore.userModel.serviceProviderOccupation = selectedOption;
                           push(const CollectAllInfo());
                         }
                       },

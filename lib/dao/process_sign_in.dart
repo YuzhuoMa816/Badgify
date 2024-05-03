@@ -86,17 +86,51 @@ class ProcessSignIn {
 
   Future<UserModel?> verifyGoogleUser(String googleUserUid) async {
     UserModel? user = await fetchUserDetailsByGoogleId(googleUserUid);
-    if (user==null){
+    if (user == null) {
       return null;
-    } else{
+    } else {
       return user;
     }
   }
 
+  // check phone or email first, then check auth by firebase, store user data
+  // into gloable return result by string
+  Future<String> signInByPhoneOrEmail(
+      BuildContext context, String account, String password) async {
+    String verifyResult = verifyValidate.checkPhoneOrEmail(account);
 
+    String userAccount = account;
+    if (verifyResult == "Phone") {
+      UserModel? userModel = await fetchUserDetailsByPhone(account);
+      if (userModel == null) {
+        return "No user found.";
+      }
+      userAccount = userModel.email;
+    }
+    UserCredential? userCredential;
 
-    void submitCreateAccountInfo(UserModel user){
-    saveUserRecord(user);
+    try {
+      userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: userAccount, password: password);
+      //   if verify success, store all the user data into the app_store
+      appStore.userModel =
+          await fetchUserDetails(userCredential.user!.uid) ;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return "No user found.";
+      } else if (e.code == 'wrong-password') {
+        return "Wrong password";
+      }
+    }
+    if (userCredential != null) {
+      return "Login Success";
+    } else {
+      throw errorSomethingWentWrong;
+    }
   }
 
+  void submitCreateAccountInfo(UserModel user) {
+    // store new user into the Database
+    saveUserRecord(user);
+  }
 }

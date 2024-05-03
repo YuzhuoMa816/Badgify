@@ -88,7 +88,7 @@ class _TypeWorkingAddressState extends State<TypeWorkingAddress> {
                       child: AppButton(
                         onTap: () async {
                           if (_typeWorkingAddressFormKey.currentState!.validate()) {
-                            appStore.userModel.address =
+                            appStore.userModel.agentWorkingCompany =
                                 workingPlaceController.text;
                             push(const CollectAllInfo());
                           }else{

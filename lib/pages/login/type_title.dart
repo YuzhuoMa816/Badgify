@@ -88,7 +88,7 @@ class _TypeTitleState extends State<TypeTitle> {
                       onTap: () async {
 
                         if (_typeTitleFormKey.currentState!.validate()) {
-                          appStore.userModel.title = titleTextController.text;
+                          appStore.userModel.serviceProviderOccupation = titleTextController.text;
                           push(const CollectAllInfo());
                         }else{
                           print("Empty form");

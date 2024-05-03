@@ -202,6 +202,7 @@ class _CheckCodeState extends State<CheckCode> {
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () async {
+                                // need resend the verify code
                                 if (!isSendingCode) {
                                   appStore.userModel.phoneNumber =
                                       checkCodePhoneController.text;

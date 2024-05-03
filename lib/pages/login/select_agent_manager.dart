@@ -24,9 +24,17 @@ class _SelectRealEstateState extends State<SelectRealEstate> {
     String selectedOption = language.photographer;
 
     return Scaffold(
-      appBar: CustomAppBar(
-        title: '',
-        isDarkMode: appStore.isDarkMode,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: ()  {
+            appStore.userModel.title = '';
+            Navigator.of(context).pop();
+
+          },
+        ),
+        title: const Text(''),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(

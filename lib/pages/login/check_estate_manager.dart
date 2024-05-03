@@ -23,9 +23,18 @@ class _CheckEstateManagerState extends State<CheckEstateManager> {
     double paddingSize = context.height() * 0.01;
 
     return Scaffold(
-      appBar: CustomAppBar(
-        title: '',
-        isDarkMode: appStore.isDarkMode,
+      appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: ()  {
+              appStore.userModel.isAgentOrManager = false;
+              Navigator.of(context).pop();
+
+            },
+          ),
+          title: Text(''),
+          centerTitle: true,
+
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -74,6 +83,7 @@ class _CheckEstateManagerState extends State<CheckEstateManager> {
                     padding: EdgeInsets.all(paddingSize),
                     child: AppButton(
                       onTap: () async {
+                        appStore.userModel.isAgentOrManager = false;
                         push(const CheckServiceProvider());
                       },
                       text: language.no,

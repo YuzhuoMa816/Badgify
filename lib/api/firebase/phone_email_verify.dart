@@ -40,7 +40,7 @@ class FirebaseVerify {
     return false;
   }
 
-  Future<void> emailPasswordLogin(String emailAddress,String password) async{
+  Future<void> emailPasswordSignIn(String emailAddress,String password) async{
     appStore.setLoading(true);
     UserCredential? userCredential;
     try {

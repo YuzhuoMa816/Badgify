@@ -42,7 +42,7 @@ class _SetPasswordState extends State<SetPassword> {
     return null;
   }
 
-  Future<void> clickSignInByPhone(textInfo) async {
+  Future<void> handlePhoneSignIn(textInfo) async {
     await processSignIn.processPhoneOrEmail(context, textInfo);
     // update the page state
     setState(() {});
@@ -122,7 +122,7 @@ class _SetPasswordState extends State<SetPassword> {
                                           "Yuzhuo"),
                                       SizedBox(height: context.height() * 0.03),
                                       Text(
-                                        language.checkInboxForVerify,
+                                        language.passwordRule,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                           fontSize: 10,
@@ -140,8 +140,9 @@ class _SetPasswordState extends State<SetPassword> {
                                               print(appStore.userModel.email);
                                               print(passwordController.text);
 
-                                              await firebaseVerify.emailPasswordLogin(appStore.userModel.email, passwordController.text );
-                                              await clickSignInByPhone(
+                                              await firebaseVerify.emailPasswordSignIn(appStore.userModel.email, passwordController.text );
+                                              // send the verify code
+                                              await handlePhoneSignIn(
                                                   appStore.userModel.phoneNumber);
 
                                               if (appStore.isLoading == false) {

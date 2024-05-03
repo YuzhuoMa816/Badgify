@@ -191,4 +191,7 @@ class LanguageCn extends BaseLanguage {
   @override
   String get sendAgain => "重新发送";
 
+  @override
+  String get passwordRule => "将密码设置在8-16个字符之间";
+
 }

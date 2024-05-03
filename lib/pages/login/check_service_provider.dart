@@ -24,10 +24,18 @@ class _CheckServiceProviderState extends State<CheckServiceProvider> {
     double paddingSize = context.height() * 0.01;
 
     return Scaffold(
-        appBar: CustomAppBar(
-          title: '',
-          isDarkMode: appStore.isDarkMode,
-        ),
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: ()  {
+                appStore.userModel.isServiceProvider = false;
+                Navigator.of(context).pop();
+
+              },
+            ),
+            title: const Text(''),
+            centerTitle: true,
+          ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
@@ -84,6 +92,7 @@ class _CheckServiceProviderState extends State<CheckServiceProvider> {
                             padding: EdgeInsets.all(paddingSize),
                             child: AppButton(
                               onTap: () async {
+                                appStore.userModel.isServiceProvider=false;
                                 push(const CollectAllInfo());
                               },
                               text: language.no,

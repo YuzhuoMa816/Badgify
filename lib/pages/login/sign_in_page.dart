@@ -68,7 +68,7 @@ class _SignInState extends State<SignIn> {
       if (await processSignIn.verifyGoogleUser(googleUser.uid)==null){
         push(const CheckEstateManager());
       }else{
-        push(const HomePage());
+        push(const HomePage(), isNewTask: true);
       }
       appStore.setLoading(false);
     }).catchError((e) {
@@ -103,7 +103,7 @@ class _SignInState extends State<SignIn> {
     print("this is fb sign in");
   }
 
-  Future<void> clickSignInByPhoneEmail(textInfo) async {
+  Future<void> signInByPhoneOrEmail(textInfo) async {
     await processSignIn.processPhoneOrEmail(context, textInfo);
     // update the page state
     setState(() {});
@@ -117,6 +117,17 @@ class _SignInState extends State<SignIn> {
       isPhone = false;
     }
   }
+  Future<void> handleSignIn(account, password) async {
+    String loginResult = await processSignIn.signInByPhoneOrEmail(context, account, password);
+    toast(loginResult);
+    if(loginResult=="Login Success"){
+      push(const HomePage(), isNewTask: true);
+    }
+    // update the page state
+    setState(() {});
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -261,21 +272,8 @@ class _SignInState extends State<SignIn> {
                         child: AppButton(
                           onTap: () async {
                             if (_signInFormKey.currentState!.validate()) {
-                              // _formKey.currentState?.save();
-                              push(const TypeTitle());
-                            } else {
-                              print("Empty form");
+                               await handleSignIn(signInPhoneEmailController.text, passwordController.text);
                             }
-
-                            // jump to main page instead
-                            // await clickSignInByPhoneEmail(signInPhoneEmailController.text);
-                            // infoIsPhone(signInPhoneEmailController.text);
-                            // if(appStore.isLoading==false){
-                            //   push(
-                            //      CheckCode(
-                            //         isPhone: isPhone, phoneOrEmailInfo: signInPhoneEmailController.text),
-                            //   );
-                            // }
                           },
                           text: language.continueWord,
                           color: primaryColor,

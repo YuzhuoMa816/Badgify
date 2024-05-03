@@ -77,3 +77,25 @@ Future<UserModel?> fetchUserDetailsByGoogleId(String googleUid) async {
     throw 'Something went wrong. Please try again';
   }
 }
+
+/// Function to fetch user details based on google ID.
+Future<UserModel?> fetchUserDetailsByPhone(String phoneNum) async {
+  try {
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    final documentSnapshot = await db
+        .collection("Users")
+        .where("PhoneNumber", isEqualTo: phoneNum)
+        .limit(1)
+        .get();
+
+    if (documentSnapshot.docs.isNotEmpty) {
+      return UserModel.fromSnapshot(documentSnapshot.docs.first);
+    } else {
+      return null;
+    }
+  } on FirebaseException catch (e) {
+    throw BFirebaseException(e.code).message;
+  } catch (e) {
+    throw 'Something went wrong. Please try again';
+  }
+}
