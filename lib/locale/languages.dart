@@ -136,5 +136,7 @@ abstract class BaseLanguage {
 
   String get passwordRule;
 
+  String get agreePolicyFirst;
+
 
 }

@@ -192,4 +192,7 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get passwordRule => "Set up your password between 8-16 characters";
+
+  @override
+  String get agreePolicyFirst => "You need to agree the Policy to join the system";
 }

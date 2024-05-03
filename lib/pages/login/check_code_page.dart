@@ -11,6 +11,7 @@ import '../../main.dart';
 import '../../modals/custom_app_bar.dart';
 import '../../modals/image.dart';
 import '../../modals/satetment_bottom.dart';
+import '../../modals/statement.dart';
 import '../../utils/colors.dart';
 import '../home_page.dart';
 import 'check_estate_manager.dart';
@@ -152,7 +153,13 @@ class _CheckCodeState extends State<CheckCode> {
                             appStore.userModel.isPhoneVerified = true;
                             processSignIn.submitCreateAccountInfo(
                                 appStore.userModel);
-                            push(const HomePage(), isNewTask: true);
+
+                            bool agreed = await AgreementModal.showPrivacyPolicyDialog(context);
+                            if(agreed) {
+                              push(const HomePage(), isNewTask: true);
+                            }else{
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("You need to agree first")));
+                            }
                           } else {
                             showDialog(
                               context: context,

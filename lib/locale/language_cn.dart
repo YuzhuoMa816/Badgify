@@ -194,4 +194,7 @@ class LanguageCn extends BaseLanguage {
   @override
   String get passwordRule => "将密码设置在8-16个字符之间";
 
+  @override
+  String get agreePolicyFirst => "您需要同意Policy才能加入系统";
+
 }
