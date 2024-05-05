@@ -1,5 +1,5 @@
-import 'package:badgify/pages/check_code_page.dart';
-import 'package:badgify/pages/sign_in_page.dart';
+import 'package:badgify/pages/login/check_code_page.dart';
+import 'package:badgify/pages/login/sign_in_page.dart';
 import 'package:badgify/store/app_configuration_store.dart';
 import 'package:badgify/store/app_store.dart';
 import 'package:badgify/utils/config.dart';

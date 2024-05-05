@@ -428,6 +428,86 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
+  late final _$isValidatedAtom =
+      Atom(name: '_AppStore.isValidated', context: context);
+
+  @override
+  bool get isValidated {
+    _$isValidatedAtom.reportRead();
+    return super.isValidated;
+  }
+
+  @override
+  set isValidated(bool value) {
+    _$isValidatedAtom.reportWrite(value, super.isValidated, () {
+      super.isValidated = value;
+    });
+  }
+
+  late final _$verifyCodeAtom =
+      Atom(name: '_AppStore.verifyCode', context: context);
+
+  @override
+  String get verifyCode {
+    _$verifyCodeAtom.reportRead();
+    return super.verifyCode;
+  }
+
+  @override
+  set verifyCode(String value) {
+    _$verifyCodeAtom.reportWrite(value, super.verifyCode, () {
+      super.verifyCode = value;
+    });
+  }
+
+  late final _$userModelAtom =
+      Atom(name: '_AppStore.userModel', context: context);
+
+  @override
+  UserModel get userModel {
+    _$userModelAtom.reportRead();
+    return super.userModel;
+  }
+
+  @override
+  set userModel(UserModel value) {
+    _$userModelAtom.reportWrite(value, super.userModel, () {
+      super.userModel = value;
+    });
+  }
+
+  late final _$isExistUserAtom =
+      Atom(name: '_AppStore.isExistUser', context: context);
+
+  @override
+  bool get isExistUser {
+    _$isExistUserAtom.reportRead();
+    return super.isExistUser;
+  }
+
+  @override
+  set isExistUser(bool value) {
+    _$isExistUserAtom.reportWrite(value, super.isExistUser, () {
+      super.isExistUser = value;
+    });
+  }
+
+  late final _$googleLoginEmailAtom =
+      Atom(name: '_AppStore.googleLoginEmail', context: context);
+
+  @override
+  String get googleLoginEmail {
+    _$googleLoginEmailAtom.reportRead();
+    return super.googleLoginEmail;
+  }
+
+  @override
+  set googleLoginEmail(String value) {
+    _$googleLoginEmailAtom.reportWrite(value, super.googleLoginEmail, () {
+      super.googleLoginEmail = value;
+    });
+  }
+
   late final _$set24HourFormatAsyncAction =
       AsyncAction('_AppStore.set24HourFormat', context: context);
 
@@ -451,6 +531,14 @@ mixin _$AppStore on _AppStore, Store {
   @override
   Future<void> setUserType(String val) {
     return _$setUserTypeAsyncAction.run(() => super.setUserType(val));
+  }
+
+  late final _$setVerifyCodeAsyncAction =
+      AsyncAction('_AppStore.setVerifyCode', context: context);
+
+  @override
+  Future<void> setVerifyCode(String val) {
+    return _$setVerifyCodeAsyncAction.run(() => super.setVerifyCode(val));
   }
 
   late final _$setAddressAsyncAction =
@@ -589,6 +677,14 @@ mixin _$AppStore on _AppStore, Store {
     return _$setLoggedInAsyncAction.run(() => super.setLoggedIn(val));
   }
 
+  late final _$setGoogleEmailAsyncAction =
+      AsyncAction('_AppStore.setGoogleEmail', context: context);
+
+  @override
+  Future<void> setGoogleEmail(String val) {
+    return _$setGoogleEmailAsyncAction.run(() => super.setGoogleEmail(val));
+  }
+
   late final _$setCurrentLocationAsyncAction =
       AsyncAction('_AppStore.setCurrentLocation', context: context);
 
@@ -623,6 +719,28 @@ mixin _$AppStore on _AppStore, Store {
         _$_AppStoreActionController.startAction(name: '_AppStore.setLoading');
     try {
       return super.setLoading(val);
+    } finally {
+      _$_AppStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setValidate(bool val) {
+    final _$actionInfo =
+        _$_AppStoreActionController.startAction(name: '_AppStore.setValidate');
+    try {
+      return super.setValidate(val);
+    } finally {
+      _$_AppStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setIsExistUser(bool val) {
+    final _$actionInfo = _$_AppStoreActionController.startAction(
+        name: '_AppStore.setIsExistUser');
+    try {
+      return super.setIsExistUser(val);
     } finally {
       _$_AppStoreActionController.endAction(_$actionInfo);
     }
@@ -668,6 +786,11 @@ useMaterialYouTheme: ${useMaterialYouTheme},
 userType: ${userType},
 is24HourFormat: ${is24HourFormat},
 userWalletAmount: ${userWalletAmount},
+isValidated: ${isValidated},
+verifyCode: ${verifyCode},
+userModel: ${userModel},
+isExistUser: ${isExistUser},
+googleLoginEmail: ${googleLoginEmail},
 userFullName: ${userFullName}
     ''';
   }

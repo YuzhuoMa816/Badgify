@@ -5,6 +5,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../locale/app_localizations.dart';
 import '../main.dart';
+import '../model/user_model.dart';
 import '../utils/colors.dart';
 import '../utils/config.dart';
 import '../utils/constant.dart';
@@ -95,6 +96,24 @@ abstract class _AppStore with Store {
   @observable
   num userWalletAmount = 0.0;
 
+  @observable
+  bool isValidated = false;
+
+
+  @observable
+  String verifyCode = getStringAsync("");
+
+  @observable
+  UserModel userModel = UserModel.empty();
+
+  @observable
+  bool isExistUser = false;
+
+  @observable
+  String googleLoginEmail = getStringAsync("");
+
+
+
   // @action
   // Future<void> setUserWalletAmount() async {
   //   if (isLoggedIn) {
@@ -123,10 +142,18 @@ abstract class _AppStore with Store {
   }
 
   @action
+  Future<void> setVerifyCode(String val) async {
+    verifyCode = val;
+    await setValue(VERIFY_CODE, val);
+  }
+
+  @action
   Future<void> setAddress(String val) async {
     address = val;
     await setValue(ADDRESS, val);
   }
+
+
 
   @action
   Future<void> setUserProfile(String val) async {
@@ -228,6 +255,23 @@ abstract class _AppStore with Store {
   void setLoading(bool val) {
     isLoading = val;
   }
+
+  @action
+  void setValidate(bool val) {
+    isValidated = val;
+  }
+
+  @action
+  void setIsExistUser(bool val) {
+    isExistUser = val;
+  }
+
+  @action
+  Future<void> setGoogleEmail(String val) async {
+    googleLoginEmail = val;
+  }
+
+
 
   @action
   Future<void> setCurrentLocation(bool val) async {

@@ -82,4 +82,118 @@ class LanguageCn extends BaseLanguage {
   @override
   String get verificationCode => "验证码";
 
+  @override
+  String get areYouAgent => "你是房地产中介吗";
+
+  @override
+  String get no => "否";
+
+  @override
+  String get yes => "是";
+
+  @override
+  String get areYouSerPro => "你是服务提供商吗?";
+
+  @override
+  String get workSpecies => "(摄影师、家居造型师等)";
+
+  @override
+  String get propertyManager => "物业经理";
+
+  @override
+  String get realEstateAgent => "房地产经纪人";
+
+  @override
+  String get homeStylist => "家庭设计师";
+
+  @override
+  String get other => "其他";
+
+  @override
+  String get photographer => "摄影师";
+
+  @override
+  String get iAmA => "我是...";
+
+  @override
+  String get iWorkIn => "我在...工作";
+
+  @override
+  String get handyPlumberEtc => "杂工/水管工等";
+
+  @override
+  String get lJHooker => "lj hooker c";
+
+  @override
+  String get otpCodeIsSentToYourMobileNumber => "验证码将发送到您的手机号码";
+
+  @override
+  String get validating => "验证中";
+
+  @override
+  String get password => "密码";
+
+  @override
+  String get lastNameExample => "煜卓";
+
+  @override
+  String get firstNameExample => "马";
+
+  @override
+  String get firstName => "姓";
+
+  @override
+  String get lastName => "名";
+
+  @override
+  String get phoneNumberExample => "+61 412 345 678";
+
+  @override
+  String get emailExample => "jackie@amazingrep.com";
+
+  @override
+  String get emailPhoneNotEmpty => "邮箱/电话不能为空";
+
+  @override
+  String get invalidCode => "验证码错误";
+
+  @override
+  String get invalidCodeNotificationText => "输入的验证码不正确。请再试一次。";
+
+  @override
+  String get passwordNotEmpty => "密码不可以为空";
+
+  @override
+  String get pleaseEnterEmail => "请输入您的邮箱";
+
+  @override
+  String get pleaseEnterFirstName => "请输入您的名字";
+
+  @override
+  String get pleaseEnterLastName => "请输入您的姓氏";
+
+  @override
+  String get pleaseEnterPhoneNum => "请输入您的电话号码";
+
+  @override
+  String get pleaseEnterTitle => "请输入您的头衔";
+
+  @override
+  String get pleaseEnterWorkPlace => "请输入您的工作地点";
+
+  @override
+  String get repeatPassword => "确认密码";
+
+  @override
+  String get didNotReceiveCode => "没有收到验证码?";
+
+  @override
+  String get sendAgain => "重新发送";
+
+  @override
+  String get passwordRule => "将密码设置在8-16个字符之间";
+
+  @override
+  String get agreePolicyFirst => "您需要同意Policy才能加入系统";
+
 }

@@ -7,7 +7,6 @@ class ExternalAuth {
   Future<User> signInWithGoogle() async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
     GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-    print("googleSignInAccount $googleSignInAccount");
 
     if (googleSignInAccount != null) {
       final GoogleSignInAuthentication googleSignInAuthentication =
@@ -24,15 +23,11 @@ class ExternalAuth {
 
       assert(!user.isAnonymous);
 
-      final User currentUser = FirebaseAuth.instance.currentUser!;
-      assert(user.uid == currentUser.uid);
-
-      print(user.email);
-
-      await googleSignIn.signOut();
+      // await googleSignIn.signOut();
 
       return user;
     } else {
+      print("No such google account");
       appStore.setLoading(false);
       throw Exception("USER_NOT_CREATED");
     }

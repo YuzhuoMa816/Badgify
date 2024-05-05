@@ -1,25 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../dao/processVerifyInfo.dart';
 import '../../main.dart';
 import '../../utils/normalise_phone_number.dart';
+import '../../utils/verify.dart';
 
 class FirebaseVerify {
-  Verify verity = Verify();
-  PhoneNumberFormatter formatter = PhoneNumberFormatter();
+  VerifyValidate verity = VerifyValidate();
 
   // 0 for invalid, 1 for phone, 2 for Email
   Future<bool> verifyInputText(String inputText) async {
-    int checkResult = verity.checkPhoneOrEmail(inputText);
+    int checkResult = verity.checkPhoneOrEmail(inputText) as int;
     if (checkResult == 1) {
-      print("in verifyInputText");
       await FirebaseAuth.instance.verifyPhoneNumber(
-
-          phoneNumber: formatter.formatAUPhoneNumber(inputText),
+          phoneNumber: PhoneNumberFormatter.formatAUPhoneNumber(inputText),
           verificationCompleted: (PhoneAuthCredential phoneAuthCredential) async {
             toast(language.verified);
-
             if (isAndroid) {
               await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
             }
@@ -42,5 +38,38 @@ class FirebaseVerify {
 
     return false;
   }
+
+  Future<void> emailPasswordSignIn(String emailAddress,String password) async{
+    appStore.setLoading(true);
+    UserCredential? userCredential;
+    try {
+      userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailAddress,
+        password: password,
+      );
+
+      appStore.userModel.emailPasswordUid = userCredential.user!.uid;
+      print("Email verify success");
+
+      appStore.setLoading(false);
+
+
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        toast('The password provided is too weak.');
+        appStore.setLoading(false);
+      } else if (e.code == 'email-already-in-use') {
+        appStore.setLoading(false);
+        toast('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+
+  }
+
+
+
+
 
 }
