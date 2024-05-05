@@ -1,4 +1,5 @@
 import 'package:badgify/pages/login/set_password.dart';
+import 'package:badgify/pages/login/sign_in_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -8,6 +9,7 @@ import '../../main.dart';
 import '../../modals/custom_app_bar.dart';
 import '../../modals/image.dart';
 import '../../utils/colors.dart';
+import '../../utils/normalise_phone_number.dart';
 import 'check_code_page.dart';
 
 class CollectAllInfo extends StatefulWidget {
@@ -167,11 +169,16 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
                                         appStore.userModel.lastName =
                                             lastNameTextController.text;
                                         appStore.userModel.phoneNumber =
-                                            phoneNumController.text;
+                                            PhoneNumberFormatter.formatAUPhoneNumber(phoneNumController.text);
                                         appStore.userModel.email =
                                             emailTextController.text;
-                                        print("appStore.userModel.email");
-                                        print(appStore.userModel.email);
+
+                                        // check current phone is already under the system
+                                        if(await processSignIn.verifyIsSystemUser(
+                                            appStore.userModel.phoneNumber)) {
+                                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("You already have account, please sign in?")));
+                                          push(const SignIn(), isNewTask: true);
+                                        }
 
                                         //  if google sign in, no password needed
                                         if(appStore.googleLoginEmail != ""){
@@ -182,6 +189,7 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
                                             print("Pass");
                                             push(CheckCode());
                                           }
+
                                         }else {
                                           push(const SetPassword());
                                         }

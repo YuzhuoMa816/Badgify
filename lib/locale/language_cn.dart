@@ -113,7 +113,6 @@ class LanguageCn extends BaseLanguage {
   String get photographer => "摄影师";
 
   @override
-  // TODO: implement iAmA
   String get iAmA => "我是...";
 
   @override

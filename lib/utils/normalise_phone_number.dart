@@ -2,7 +2,7 @@
 
 
 class PhoneNumberFormatter {
-  String formatAUPhoneNumber(String phoneNumber) {
+  static String formatAUPhoneNumber(String phoneNumber) {
     phoneNumber = phoneNumber.replaceAll(' ', '');
 
     if (phoneNumber.startsWith('0')) {

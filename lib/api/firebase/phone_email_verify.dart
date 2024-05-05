@@ -7,14 +7,13 @@ import '../../utils/verify.dart';
 
 class FirebaseVerify {
   VerifyValidate verity = VerifyValidate();
-  PhoneNumberFormatter formatter = PhoneNumberFormatter();
 
   // 0 for invalid, 1 for phone, 2 for Email
   Future<bool> verifyInputText(String inputText) async {
     int checkResult = verity.checkPhoneOrEmail(inputText) as int;
     if (checkResult == 1) {
       await FirebaseAuth.instance.verifyPhoneNumber(
-          phoneNumber: formatter.formatAUPhoneNumber(inputText),
+          phoneNumber: PhoneNumberFormatter.formatAUPhoneNumber(inputText),
           verificationCompleted: (PhoneAuthCredential phoneAuthCredential) async {
             toast(language.verified);
             if (isAndroid) {

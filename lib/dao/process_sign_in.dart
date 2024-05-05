@@ -7,6 +7,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../data/repositories/user_repository.dart';
 import '../model/user_model.dart';
 import '../utils/config.dart';
+import '../utils/normalise_phone_number.dart';
 
 class ProcessSignIn {
   VerifyValidate verifyValidate = VerifyValidate();
@@ -93,6 +94,17 @@ class ProcessSignIn {
     }
   }
 
+  Future<bool> verifyIsSystemUser(String phoneNum) async {
+    UserModel? userModel = await fetchUserDetailsByPhone(phoneNum);
+
+    if (userModel == null) {
+      // no such user, return false
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   // check phone or email first, then check auth by firebase, store user data
   // into gloable return result by string
   Future<String> signInByPhoneOrEmail(
@@ -101,7 +113,10 @@ class ProcessSignIn {
 
     String userAccount = account;
     if (verifyResult == "Phone") {
-      UserModel? userModel = await fetchUserDetailsByPhone(account);
+      String formattedPhoneNum = PhoneNumberFormatter.formatAUPhoneNumber(account);
+
+      print("formattedPhoneNum$formattedPhoneNum");
+      UserModel? userModel = await fetchUserDetailsByPhone(formattedPhoneNum);
       if (userModel == null) {
         return "No user found.";
       }
@@ -113,8 +128,7 @@ class ProcessSignIn {
       userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: userAccount, password: password);
       //   if verify success, store all the user data into the app_store
-      appStore.userModel =
-          await fetchUserDetails(userCredential.user!.uid) ;
+      appStore.userModel = await fetchUserDetails(userCredential.user!.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         return "No user found.";
@@ -125,7 +139,7 @@ class ProcessSignIn {
     if (userCredential != null) {
       return "Login Success";
     } else {
-      throw errorSomethingWentWrong;
+      return "Wrong Password";
     }
   }
 
@@ -133,5 +147,4 @@ class ProcessSignIn {
     // store new user into the Database
     saveUserRecord(user);
   }
-
 }
