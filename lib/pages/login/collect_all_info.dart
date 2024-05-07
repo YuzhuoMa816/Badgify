@@ -1,4 +1,3 @@
-import 'package:badgify/pages/login/set_password.dart';
 import 'package:badgify/pages/login/sign_in_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,13 +22,12 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
   final GlobalKey<FormState> _createAccountFormKey = GlobalKey<FormState>();
   ProcessSignIn processSignIn = ProcessSignIn();
   late String preWriteEmail;
-  late TextEditingController emailTextController;
+
 
   @override
   void initState() {
-    super.initState();
+     super.initState();
 
-    emailTextController = TextEditingController(text: appStore.googleLoginEmail);
   }
 
   TextEditingController phoneNumController = TextEditingController();
@@ -37,8 +35,43 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
   TextEditingController lastNameTextController = TextEditingController();
 
 
+  Future<void> handleAllInfoSubmit(String firstNamePara, String lastNamePara, String phoneNumPara) async {
+    // verify phone first
+    if(processSignIn.verifyPhone(phoneNumPara)==false){
+      ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+          content: Text(language.invalidPhone)));
+    }
 
-  @override
+    // format phone
+    String phoneNum = PhoneNumberFormatter.formatAUPhoneNumber(phoneNumPara);
+
+
+    // Store the info
+    appStore.userModel.firstName = firstNamePara;
+    appStore.userModel.lastName = lastNamePara;
+    appStore.userModel.phoneNumber = phoneNum;
+
+    // check current phone is already under the system, if true back to signin
+    if (await processSignIn
+        .verifyIsSystemUser(phoneNum)) {
+      ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+          content: Text(language.alreadyHaveAccount
+              )));
+      await push(const SignIn(),
+          isNewTask: true);
+      return;
+    }else {
+      await processSignIn.phoneSendCodeSignin(context, phoneNum);
+      // update the page state
+      setState(() {});
+      if (appStore.isLoading == false) {
+        push(const CheckCode());
+      }
+    }
+  }
+
+
+    @override
   Widget build(BuildContext context) {
     double paddingSize = context.height() * 0.01;
     String? _firstName;
@@ -46,7 +79,8 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
     String? _phoneNumber;
     String? _email;
 
-    Widget customTextForm(TextEditingController? textController,
+    Widget customTextForm(
+        TextEditingController? textController,
         String hintText,
         String labelText,
         String validatorText,
@@ -73,134 +107,87 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
           if (value == null || value.isEmpty) {
             return validatorText;
           }
+
           return null;
         },
       );
     }
 
     return Scaffold(
-        appBar: CustomAppBar(
-          title: '',
-          isDarkMode: appStore.isDarkMode,
-        ),
-        body: SafeArea(
-            child: SingleChildScrollView(
-                child: Padding(
-                    padding: EdgeInsets.all(context.height() * 0.01),
-                    child: Center(
-                        child: SizedBox(
-                            width: context.width() * 0.9,
-                            child: Form(
-                                key: _createAccountFormKey,
-                                child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.stretch,
-                                    children: [
+      appBar: CustomAppBar(
+        title: '',
+        isDarkMode: appStore.isDarkMode,
+      ),
+      body: SafeArea(
+          child: SingleChildScrollView(
+              child: Padding(
+                  padding: EdgeInsets.all(context.height() * 0.01),
+                  child: Center(
+                      child: SizedBox(
+                          width: context.width() * 0.9,
+                          child: Form(
+                              key: _createAccountFormKey,
+                              child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
                                     SizedBox(height: paddingSize),
-                                const Logo(),
-                                SizedBox(height: context.height() * 0.05),
-                                Text(
-                                  language.createAccount,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 24,
-                                  ),
-                                ),
-                                SizedBox(height: context.height() * 0.03),
-                                customTextForm(
-                                    firstNameTextController,
-                                    language.firstNameExample,
-                                    language.firstName,
-                                    language.pleaseEnterFirstName,
-                                    "Yuzhuo"),
-                                SizedBox(height: context.height() * 0.03),
-                                customTextForm(
-                                    lastNameTextController,
-                                    language.lastNameExample,
-                                    language.lastName,
-                                    language.pleaseEnterLastName,
-                                    "Yuzhuo"),
-                                SizedBox(height: context.height() * 0.03),
-                                customTextForm(
-                                    phoneNumController,
-                                    language.phoneNumberExample,
-                                    language.phoneNumber,
-                                    language.pleaseEnterPhoneNum,
-                                    "Yuzhuo"),
-                                SizedBox(height: context.height() * 0.03),
-                                TextFormField(
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _email = value;
-                                    });
-                                  },
-                                  controller: emailTextController,
-                                  decoration: InputDecoration(
-                                    hintText: language.emailExample,
-                                    labelText: language.email,
-                                    border: const OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(Radius
-                                          .circular(10)),
-                                      borderSide: BorderSide(
-                                        color: Colors.red,
-                                        width: 2.0,
+                                    const Logo(),
+                                    SizedBox(height: context.height() * 0.05),
+                                    Text(
+                                      language.createAccount,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24,
                                       ),
                                     ),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return language.pleaseEnterEmail;
-                                    }
-                                    return null;
-                                  },
-                                ),
+                                    SizedBox(height: context.height() * 0.03),
+                                    customTextForm(
+                                        firstNameTextController,
+                                        language.firstNameExample,
+                                        language.firstName,
+                                        language.pleaseEnterFirstName,
+                                        "Yuzhuo"),
+                                    SizedBox(height: context.height() * 0.03),
+                                    customTextForm(
+                                        lastNameTextController,
+                                        language.lastNameExample,
+                                        language.lastName,
+                                        language.pleaseEnterLastName,
+                                        "Yuzhuo"),
+                                    SizedBox(height: context.height() * 0.03),
+                                    customTextForm(
+                                        phoneNumController,
+                                        language.phoneNumberExample,
+                                        language.phoneNumber,
+                                        language.pleaseEnterPhoneNum,
+                                        "Yuzhuo"),
+                                    SizedBox(height: context.height() * 0.03),
 
-                                SizedBox(height: context.height() * 0.03),
-                                Padding(
-                                  padding: EdgeInsets.all(paddingSize),
-                                  child: AppButton(
-                                    onTap: () async {
-                                      if (_createAccountFormKey
-                                          .currentState!
-                                          .validate()) {
-                                        appStore.userModel.firstName =
-                                            firstNameTextController.text;
-                                        appStore.userModel.lastName =
-                                            lastNameTextController.text;
-                                        appStore.userModel.phoneNumber =
-                                            PhoneNumberFormatter.formatAUPhoneNumber(phoneNumController.text);
-                                        appStore.userModel.email =
-                                            emailTextController.text;
 
-                                        // check current phone is already under the system
-                                        if(await processSignIn.verifyIsSystemUser(
-                                            appStore.userModel.phoneNumber)) {
-                                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("You already have account, please sign in?")));
-                                          push(const SignIn(), isNewTask: true);
-                                        }
+                                    Padding(
+                                      padding: EdgeInsets.all(paddingSize),
+                                      child: AppButton(
+                                        onTap: () async {
+                                          if (_createAccountFormKey
+                                              .currentState!
+                                              .validate()) {
 
-                                        //  if google sign in, no password needed
-                                        if(appStore.googleLoginEmail != ""){
-                                          await processSignIn.processPhoneOrEmailSignIn(context, appStore.userModel.phoneNumber);
-                                          // update the page state
-                                          setState(() {});
-                                          if (appStore.isLoading == false) {
-                                            print("Pass");
-                                            push(CheckCode());
+                                            await handleAllInfoSubmit(
+                                                firstNameTextController.text,
+                                              lastNameTextController.text,
+                                              phoneNumController.text
+                                            );
                                           }
-
-                                        }else {
-                                          push(const SetPassword());
-                                        }
-                                      }
-                                    },
-                                    text: language.continueWord,
-                                    color: primaryColor,
-                                    textColor: Colors.white,
-                                    width: context.width(),
-                                  ),
-                                ),
-                                ]))))))),);
+                                        },
+                                        text: language.continueWord,
+                                        color: primaryColor,
+                                        textColor: Colors.white,
+                                        width: context.width(),
+                                      ),
+                                    ),
+                                  ]))))))),
+    );
   }
 }

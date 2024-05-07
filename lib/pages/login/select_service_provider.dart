@@ -1,12 +1,10 @@
 import 'package:badgify/pages/login/collect_all_info.dart';
 import 'package:badgify/pages/login/type_title.dart';
-import 'package:badgify/pages/login/type_working_address.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../main.dart';
-import '../../modals/custom_app_bar.dart';
 import '../../modals/image.dart';
 import '../../modals/radio_button.dart';
 import '../../modals/satetment_bottom.dart';

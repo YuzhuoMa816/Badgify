@@ -114,14 +114,6 @@ abstract class _AppStore with Store {
 
 
 
-  // @action
-  // Future<void> setUserWalletAmount() async {
-  //   if (isLoggedIn) {
-  //     userWalletAmount = await getUserWalletBalance();
-  //   } else {
-  //     userWalletAmount = 0.0;
-  //   }
-  // }
 
   @action
   Future<void> set24HourFormat(bool val) async {
@@ -270,6 +262,8 @@ abstract class _AppStore with Store {
   Future<void> setGoogleEmail(String val) async {
     googleLoginEmail = val;
   }
+
+
 
 
 
