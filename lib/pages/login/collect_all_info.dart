@@ -68,9 +68,6 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
         push(const CheckCode());
       }
     }
-
-
-
   }
 
 
@@ -110,6 +107,7 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
           if (value == null || value.isEmpty) {
             return validatorText;
           }
+
           return null;
         },
       );

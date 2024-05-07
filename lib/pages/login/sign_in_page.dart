@@ -105,11 +105,11 @@ class _SignInState extends State<SignIn> {
 
   Future<void> handleSignIn(account) async {
     // verify first
-    if (processSignIn.verifyPhone(account) == false) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar( SnackBar(content: Text(language.invalidPhone)));
-      return;
-    }
+    // if (processSignIn.verifyPhone(account) == false) {
+    //   ScaffoldMessenger.of(context)
+    //       .showSnackBar( SnackBar(content: Text(language.invalidPhone)));
+    //   return;
+    // }
     // format phone
     String phoneNum = PhoneNumberFormatter.formatAUPhoneNumber(account);
 
@@ -231,6 +231,9 @@ class _SignInState extends State<SignIn> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return language.pleaseEnterPhoneNum;
+                            }
+                            if(processSignIn.verifyPhone(signInPhoneController.text) ==false){
+                              return language.invalidPhone;
                             }
                             return null;
                           },

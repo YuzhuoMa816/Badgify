@@ -13,7 +13,6 @@ import '../../modals/image.dart';
 import '../../modals/statement.dart';
 import '../../utils/colors.dart';
 import '../home_page.dart';
-import 'check_estate_manager.dart';
 
 class CheckCode extends StatefulWidget {
   const CheckCode({Key? key}) : super(key: key);
