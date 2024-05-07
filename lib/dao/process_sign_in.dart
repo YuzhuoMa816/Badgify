@@ -56,7 +56,7 @@ class ProcessSignIn {
         verificationId: appStore.verifyCode, smsCode: smsCode);
     await FirebaseAuth.instance
         .signInWithCredential(credential)
-        .then((UserCredential userCredential) async {
+        .then((UserCredential userCredential) {
       User? user = userCredential.user;
       appStore.userModel.uid = user!.uid;
 
