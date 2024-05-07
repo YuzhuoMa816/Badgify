@@ -38,9 +38,8 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
   Future<void> handleAllInfoSubmit(String firstNamePara, String lastNamePara, String phoneNumPara) async {
     // verify phone first
     if(processSignIn.verifyPhone(phoneNumPara)==false){
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              "Invalid phone input")));
+      ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+          content: Text(language.invalidPhone)));
     }
 
     // format phone
@@ -55,9 +54,9 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
     // check current phone is already under the system, if true back to signin
     if (await processSignIn
         .verifyIsSystemUser(phoneNum)) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              "You already have account, please sign in")));
+      ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+          content: Text(language.alreadyHaveAccount
+              )));
       await push(const SignIn(),
           isNewTask: true);
       return;

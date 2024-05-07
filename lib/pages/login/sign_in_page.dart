@@ -107,7 +107,7 @@ class _SignInState extends State<SignIn> {
     // verify first
     if (processSignIn.verifyPhone(account) == false) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Invalid phone input")));
+          .showSnackBar( SnackBar(content: Text(language.invalidPhone)));
       return;
     }
     // format phone
@@ -127,8 +127,9 @@ class _SignInState extends State<SignIn> {
       }
     } else {
       // show info to user
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text("Do not have account, please Create account")));
+      ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+          content: Text(language.dontHaveAccount)));
+
     }
   }
 

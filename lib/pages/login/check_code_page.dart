@@ -156,11 +156,8 @@ class _CheckCodeState extends State<CheckCode> {
 
                             bool agreed = await AgreementModal.showPrivacyPolicyDialog(context);
                             if(agreed) {
-
                               // fetch user from DB
                               // after verified, update user modal in appstore
-                              print("Set up user this is uid");
-                              print(appStore.userModel.uid);
                               appStore.userModel = await fetchUserDetails(appStore.userModel.uid);
 
                               push(const HomePage(), isNewTask: true);

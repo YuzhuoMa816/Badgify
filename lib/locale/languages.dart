@@ -142,5 +142,8 @@ abstract class BaseLanguage {
 
   String get resetPassword;
 
+  String get invalidPhone;
+
+  String get alreadyHaveAccount;
 
 }

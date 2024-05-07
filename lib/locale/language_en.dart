@@ -44,7 +44,7 @@ class LanguageEn extends BaseLanguage {
   String get createAccount => 'Create account';
 
   @override
-  String get dontHaveAccount => 'Don\'t have an account';
+  String get dontHaveAccount => 'Don\'t have an account, please Create account';
 
   @override
   String get or => 'Or';
@@ -201,4 +201,10 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get resetPassword => "Reset Password";
+
+  @override
+  String get alreadyHaveAccount => "You already have account, please sign in";
+
+  @override
+  String get invalidPhone => "Invalid Phone Number";
 }
