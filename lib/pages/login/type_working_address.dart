@@ -1,6 +1,4 @@
 import 'package:badgify/pages/login/collect_all_info.dart';
-import 'package:badgify/pages/login/select_agent_manager.dart';
-import 'package:badgify/store/app_store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';

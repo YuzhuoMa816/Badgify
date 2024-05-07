@@ -196,4 +196,11 @@ class LanguageCn extends BaseLanguage {
   @override
   String get agreePolicyFirst => "您需要同意Policy才能加入系统";
 
+  @override
+  String get forgetPassword => "忘记密码?";
+
+  @override
+  String get resetPassword => "重制密码";
+
+
 }

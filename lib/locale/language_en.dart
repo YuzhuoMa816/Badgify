@@ -195,4 +195,10 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get agreePolicyFirst => "You need to agree the Policy to join the system";
+
+  @override
+  String get forgetPassword => "forgot password?";
+
+  @override
+  String get resetPassword => "Reset Password";
 }

@@ -1,16 +1,15 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:flutter_verification_code_field/flutter_verification_code_field.dart';
 
+import '../../api/firebase/phone_email_verify.dart';
 import '../../dao/process_sign_in.dart';
+import '../../data/repositories/user_repository.dart';
 import '../../main.dart';
 import '../../modals/custom_app_bar.dart';
 import '../../modals/image.dart';
-import '../../modals/satetment_bottom.dart';
 import '../../modals/statement.dart';
 import '../../utils/colors.dart';
 import '../home_page.dart';
@@ -26,6 +25,7 @@ class CheckCode extends StatefulWidget {
 class _CheckCodeState extends State<CheckCode> {
   TextEditingController checkCodePhoneController = TextEditingController();
   TextEditingController checkCodeVerifyCodeController = TextEditingController();
+  FirebaseVerify firebaseVerify = FirebaseVerify();
 
   ProcessSignIn processSignIn = ProcessSignIn();
   int countDownSeconds = 60;
@@ -38,7 +38,7 @@ class _CheckCodeState extends State<CheckCode> {
   }
 
   Future<void> clickSignInByPhone(textInfo) async {
-    await processSignIn.processPhoneOrEmailSignIn(context, textInfo);
+    await processSignIn.phoneSendCodeSignin(context, textInfo);
     // update the page state
     setState(() {});
   }
@@ -156,6 +156,13 @@ class _CheckCodeState extends State<CheckCode> {
 
                             bool agreed = await AgreementModal.showPrivacyPolicyDialog(context);
                             if(agreed) {
+
+                              // fetch user from DB
+                              // after verified, update user modal in appstore
+                              print("Set up user this is uid");
+                              print(appStore.userModel.uid);
+                              appStore.userModel = await fetchUserDetails(appStore.userModel.uid);
+
                               push(const HomePage(), isNewTask: true);
                             }else{
                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("You need to agree first")));

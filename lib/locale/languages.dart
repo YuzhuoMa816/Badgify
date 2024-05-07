@@ -138,5 +138,9 @@ abstract class BaseLanguage {
 
   String get agreePolicyFirst;
 
+  String get forgetPassword;
+
+  String get resetPassword;
+
 
 }

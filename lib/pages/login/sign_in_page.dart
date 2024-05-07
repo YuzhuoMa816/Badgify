@@ -1,6 +1,6 @@
 import 'package:badgify/main.dart';
 import 'package:badgify/pages/home_page.dart';
-import 'package:badgify/pages/login/type_title.dart';
+import 'package:badgify/pages/login/check_code_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +12,7 @@ import '../../modals/custom_app_bar.dart';
 import '../../modals/image.dart';
 import '../../modals/satetment_bottom.dart';
 import '../../utils/colors.dart';
+import '../../utils/normalise_phone_number.dart';
 import 'check_estate_manager.dart';
 
 class SignIn extends StatefulWidget {
@@ -35,7 +36,7 @@ Color highContrastColor = getHighContrastColor();
 // extract button widget for the continue with apple/google/fb
 
 class _SignInState extends State<SignIn> {
-  TextEditingController signInPhoneEmailController = TextEditingController();
+  TextEditingController signInPhoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _signInFormKey = GlobalKey<FormState>();
 
@@ -64,13 +65,12 @@ class _SignInState extends State<SignIn> {
       appStore.userModel.googleUid = googleUser.uid;
       appStore.googleLoginEmail = googleUser.email!;
 
-
-      if (await processSignIn.verifyGoogleUser(googleUser.uid)==null){
+      if (await processSignIn.verifyGoogleUser(googleUser.uid) == null) {
         push(const CheckEstateManager());
-      }else{
+      } else {
+        appStore.setLoading(false);
         push(const HomePage(), isNewTask: true);
       }
-      appStore.setLoading(false);
     }).catchError((e) {
       appStore.setLoading(false);
       toast(e.toString());
@@ -103,31 +103,34 @@ class _SignInState extends State<SignIn> {
     print("this is fb sign in");
   }
 
-  Future<void> signInByPhoneOrEmail(textInfo) async {
-    await processSignIn.processPhoneOrEmailSignIn(context, textInfo);
-    // update the page state
-    setState(() {});
-  }
+  Future<void> handleSignIn(account) async {
+    // verify first
+    if (processSignIn.verifyPhone(account) == false) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Invalid phone input")));
+      return;
+    }
+    // format phone
+    String phoneNum = PhoneNumberFormatter.formatAUPhoneNumber(account);
 
-  void infoIsPhone(textInfo) {
-    String verifyResult = processSignIn.checkPhoneOrEmail(textInfo);
-    if (verifyResult == "Phone") {
-      isPhone = true;
+    // check if current phone is system user
+
+    if (await processSignIn.verifyIsSystemUser(phoneNum)) {
+      // send code to current user
+      await processSignIn.phoneSendCodeSignin(context, phoneNum);
+      // update the page state
+      setState(() {});
+      appStore.userModel.phoneNumber = phoneNum;
+
+      if (appStore.isLoading == false) {
+        push(const CheckCode());
+      }
     } else {
-      isPhone = false;
+      // show info to user
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Do not have account, please Create account")));
     }
   }
-  Future<void> handleSignIn(account, password) async {
-    String loginResult = await processSignIn.signInByPhoneOrEmail(context, account, password);
-    toast(loginResult);
-    if(loginResult=="Login Success"){
-      push(const HomePage(), isNewTask: true);
-    }
-    // update the page state
-    setState(() {});
-  }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +176,6 @@ class _SignInState extends State<SignIn> {
 
     double paddingSize = context.height() * 0.01;
     String? _phoneEmail;
-    String? _password;
     return Scaffold(
       appBar: CustomAppBar(
         title: '',
@@ -216,9 +218,9 @@ class _SignInState extends State<SignIn> {
                               _phoneEmail = value;
                             });
                           },
-                          controller: signInPhoneEmailController,
+                          controller: signInPhoneController,
                           decoration: InputDecoration(
-                            hintText: language.enterYourPhoneEmail,
+                            hintText: language.phoneNumber,
                             border: OutlineInputBorder(
                               borderSide: const BorderSide(
                                   color: Colors.black87, width: 1.0),
@@ -227,7 +229,7 @@ class _SignInState extends State<SignIn> {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return language.emailPhoneNotEmpty;
+                              return language.pleaseEnterPhoneNum;
                             }
                             return null;
                           },
@@ -237,42 +239,16 @@ class _SignInState extends State<SignIn> {
                         ),
                       ),
 
-                      Padding(
-                        padding: EdgeInsets.all(paddingSize),
-                        child: TextFormField(
-                          onTap: () {
-                            textFieldFocusNode.requestFocus();
-                          },
-                          onChanged: (value) {
-                            setState(() {
-                              _password = value;
-                            });
-                          },
-                          controller: passwordController,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            hintText: language.password,
-                            border: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.black87, width: 1.0),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return language.passwordNotEmpty;
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      // Continue button
+                      SizedBox(height: context.height() * 0.02),
+
                       Padding(
                         padding: EdgeInsets.all(paddingSize),
                         child: AppButton(
                           onTap: () async {
                             if (_signInFormKey.currentState!.validate()) {
-                               await handleSignIn(signInPhoneEmailController.text, passwordController.text);
+                              await handleSignIn(
+                                signInPhoneController.text,
+                              );
                             }
                           },
                           text: language.continueWord,
@@ -282,7 +258,6 @@ class _SignInState extends State<SignIn> {
                         ),
                       ),
 
-                      SizedBox(height: context.height() * 0.02),
                       RichText(
                         textAlign: TextAlign.center,
                         text: TextSpan(
@@ -295,8 +270,8 @@ class _SignInState extends State<SignIn> {
                             ),
                             TextSpan(
                               text: language.createAccount,
-                              style: const TextStyle(
-                                color: Color.fromRGBO(53, 173, 225, 1.0),
+                              style: TextStyle(
+                                color: primaryColor,
                                 fontWeight: FontWeight.bold,
                                 decoration: TextDecoration.underline,
                               ),

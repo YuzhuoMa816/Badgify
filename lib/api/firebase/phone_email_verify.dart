@@ -10,50 +10,51 @@ class FirebaseVerify {
 
   // 0 for invalid, 1 for phone, 2 for Email
   Future<bool> verifyInputText(String inputText) async {
-    int checkResult = verity.checkPhoneOrEmail(inputText) as int;
+    int checkResult = verity.checkValidPhone(inputText) as int;
     if (checkResult == 1) {
       await FirebaseAuth.instance.verifyPhoneNumber(
           phoneNumber: PhoneNumberFormatter.formatAUPhoneNumber(inputText),
-          verificationCompleted: (PhoneAuthCredential phoneAuthCredential) async {
+          verificationCompleted:
+              (PhoneAuthCredential phoneAuthCredential) async {
             toast(language.verified);
             if (isAndroid) {
-              await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
+              await FirebaseAuth.instance
+                  .signInWithCredential(phoneAuthCredential);
             }
           },
           verificationFailed: (FirebaseAuthException error) {
             print("in");
             appStore.setLoading(false);
             if (error.code == 'invalid-phone-number') {
-              toast(language.theEnteredCodeIsInvalidPleaseTryAgain, print: true);
+              toast(language.theEnteredCodeIsInvalidPleaseTryAgain,
+                  print: true);
             } else {
               toast(error.toString(), print: true);
             }
           },
           codeSent: (String verificationId, int? forceResendingToken) {},
-          codeAutoRetrievalTimeout: (String verificationId) {}
-
-      );
+          codeAutoRetrievalTimeout: (String verificationId) {});
       return true;
     }
 
     return false;
   }
 
-  Future<void> emailPasswordSignIn(String emailAddress,String password) async{
+  Future<void> emailPasswordSignIn(String emailAddress, String password) async {
     appStore.setLoading(true);
     UserCredential? userCredential;
     try {
-      userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailAddress,
         password: password,
       );
 
       appStore.userModel.emailPasswordUid = userCredential.user!.uid;
       print("Email verify success");
+      appStore.userModel.isEmailVerified = true;
 
       appStore.setLoading(false);
-
-
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         toast('The password provided is too weak.');
@@ -65,11 +66,20 @@ class FirebaseVerify {
     } catch (e) {
       print(e);
     }
-
   }
 
-
-
-
-
+  // Future<void> updatePasswordForEmail(
+  //     String emailAddress, String password) async {
+  //
+  //   final user = FirebaseAuth.instance.currentUser!;
+  //
+  //
+  //
+  //   //Pass in the password to updatePassword.
+  //   user.updatePassword(password).then((_) {
+  //     toast("Successfully update the password");
+  //   }).catchError((error) {
+  //     toast("Password can't be changed$error");
+  //   });
+  // }
 }

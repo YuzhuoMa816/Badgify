@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../main.dart';
-import '../../modals/custom_app_bar.dart';
 import '../../modals/image.dart';
 import '../../modals/radio_button.dart';
 import '../../modals/satetment_bottom.dart';
@@ -21,7 +20,7 @@ class _SelectRealEstateState extends State<SelectRealEstate> {
   @override
   Widget build(BuildContext context) {
     double paddingSize = context.height() * 0.01;
-    String selectedOption = language.photographer;
+    String selectedOption = language.realEstateAgent;
 
     return Scaffold(
       appBar: AppBar(
