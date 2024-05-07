@@ -24,6 +24,7 @@ class UserModel {
   String emailPasswordUid;
   String agentWorkingCompany;
   String serviceProviderOccupation;
+  bool agreedPolicy;
 
   /// Constructor for UserModel.
   UserModel({
@@ -47,7 +48,9 @@ class UserModel {
     required this.facebookUid,
     required this.emailPasswordUid,
     required this.agentWorkingCompany,
-    required this.serviceProviderOccupation
+    required this.serviceProviderOccupation,
+    required this.agreedPolicy,
+
   });
 
   /// Static function to create an empty user model.
@@ -70,7 +73,9 @@ class UserModel {
       appleUid: '',
       googleUid: '',
       facebookUid: '',
-      emailPasswordUid: '', agentWorkingCompany: '', serviceProviderOccupation: '');
+      emailPasswordUid: '', agentWorkingCompany: '', serviceProviderOccupation: '',
+      agreedPolicy:false,
+  );
 
   /// Convert model to JSON structure for storing data in Firebase.
   Map<String, dynamic> toJson() {
@@ -96,7 +101,7 @@ class UserModel {
       'EmailPasswordUid': emailPasswordUid,
       'AgentWorkingCompany': agentWorkingCompany,
       'ServiceProviderOccupation': serviceProviderOccupation,
-
+      'AgreedPolicy': agreedPolicy,
     };
   }
 
@@ -127,6 +132,7 @@ class UserModel {
           emailPasswordUid: data['EmailPasswordUid'] ?? '',
         agentWorkingCompany: data['AgentWorkingCompany'] ?? '',
         serviceProviderOccupation: data['ServiceProviderOccupation'] ?? '',
+          agreedPolicy:data['AgreedPolicy'] ?? false,
       );
     } else {
       return UserModel.empty();

@@ -113,8 +113,7 @@ class _CheckCodeState extends State<CheckCode> {
                             Icons.phone,
                             color: Colors.black87,
                           ),
-                          contentPadding:
-                          EdgeInsets.symmetric(vertical: 13),
+                          contentPadding: EdgeInsets.symmetric(vertical: 13),
                         ),
                       ),
                     ),
@@ -136,7 +135,7 @@ class _CheckCodeState extends State<CheckCode> {
                             color: Colors.black87,
                           ),
                           contentPadding:
-                          EdgeInsets.fromLTRB(25.0, 15.0, 20.0, 15.0),
+                              EdgeInsets.fromLTRB(25.0, 15.0, 20.0, 15.0),
                         ),
                       ),
                     ),
@@ -145,23 +144,40 @@ class _CheckCodeState extends State<CheckCode> {
                       padding: EdgeInsets.all(paddingSize),
                       child: AppButton(
                         onTap: () async {
+                          // fetch user id here
                           await processSignIn.verifyCredential(
                               checkCodeVerifyCodeController.text);
                           if (appStore.isValidated) {
                             appStore.setVerifyCode("");
                             appStore.userModel.isPhoneVerified = true;
-                            processSignIn.submitCreateAccountInfo(
-                                appStore.userModel);
 
-                            bool agreed = await AgreementModal.showPrivacyPolicyDialog(context);
-                            if(agreed) {
+
+                            bool agreed = false;
+                            // fetch user from DB
+                            appStore.userModel = await fetchUserDetails(
+                                appStore.userModel.uid);
+                            if (appStore.userModel.agreedPolicy) {
+                              push(const HomePage(), isNewTask: true);
+                              return;
+                            } else {
+                              agreed =
+                                  await AgreementModal.showPrivacyPolicyDialog(
+                                      context);
+                            }
+                            if (agreed) {
+                              // first time user come in
                               // fetch user from DB
                               // after verified, update user modal in appstore
-                              appStore.userModel = await fetchUserDetails(appStore.userModel.uid);
+                              appStore.userModel.agreedPolicy = true;
+                              processSignIn
+                                  .submitCreateAccountInfo(appStore.userModel);
 
                               push(const HomePage(), isNewTask: true);
-                            }else{
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("You need to agree first")));
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content:
+                                          Text("You need to agree first")));
                             }
                           } else {
                             showDialog(

@@ -261,6 +261,7 @@ class _SignInState extends State<SignIn> {
                           width: context.width(),
                         ),
                       ),
+                      SizedBox(height: context.height() * 0.02),
 
                       RichText(
                         textAlign: TextAlign.center,

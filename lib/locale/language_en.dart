@@ -44,7 +44,7 @@ class LanguageEn extends BaseLanguage {
   String get createAccount => 'Create account';
 
   @override
-  String get dontHaveAccount => 'Don\'t have an account, please Create account';
+  String get dontHaveAccount => 'Don\'t have an account';
 
   @override
   String get or => 'Or';

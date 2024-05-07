@@ -26,7 +26,7 @@ class _CollectAllInfoState extends State<CollectAllInfo> {
 
   @override
   void initState() {
-    super.initState();
+     super.initState();
 
   }
 
